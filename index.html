@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management ERP | হাসপাতাল ম্যানেজমেন্ট</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --sidebar-bg: #1e293b;
+            --sidebar-text: #cbd5e1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); display: flex; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px; background: var(--sidebar-bg); color: var(--sidebar-text);
+            padding: 20px 0; position: fixed; height: 100vh; overflow-y: auto; transition: 0.3s;
+        }
+        .logo { padding: 0 20px 30px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #334155; margin-bottom: 20px;}
+        .logo i { font-size: 24px; color: var(--primary); }
+        .logo h2 { font-size: 18px; color: #fff; }
+        .nav-menu { list-style: none; }
+        .nav-menu li a {
+            display: flex; align-items: center; gap: 15px; padding: 12px 25px;
+            color: var(--sidebar-text); text-decoration: none; transition: 0.2s; font-size: 15px;
+        }
+        .nav-menu li a:hover, .nav-menu li a.active { background: var(--primary); color: #fff; border-right: 4px solid #fff; }
+        .nav-menu li a i { width: 20px; text-align: center; }
+
+        /* Main Content */
+        .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 20px 30px; }
+        
+        /* Topbar */
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .topbar h1 { font-size: 24px; color: var(--text-main); }
+        .topbar-right { display: flex; align-items: center; gap: 20px; }
+        .lang-toggle {
+            background: var(--primary); color: #fff; border: none; padding: 8px 15px;
+            border-radius: 20px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;
+        }
+        .profile { display: flex; align-items: center; gap: 10px; }
+        .profile img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); }
+
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card {
+            background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex; justify-content: space-between; align-items: center; transition: transform 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-info h3 { font-size: 14px; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+        .stat-info h2 { font-size: 28px; font-weight: 700; }
+        .stat-icon { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; }
+        .bg-blue { background: var(--primary); }
+        .bg-green { background: var(--success); }
+        .bg-yellow { background: var(--warning); }
+        .bg-red { background: var(--danger); }
+
+        /* Content Grid */
+        .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        .card { background: var(--card-bg); padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-header h3 { font-size: 18px; font-weight: 600; }
+        
+        /* Table */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
+        th { background: #f9fafb; color: var(--text-muted); font-weight: 600; }
+        .badge { padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 600; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+
+        /* Quick Actions */
+        .quick-actions { display: flex; flex-direction: column; gap: 15px; }
+        .action-btn {
+            display: flex; align-items: center; gap: 15px; padding: 15px; background: #f9fafb;
+            border-radius: 8px; text-decoration: none; color: var(--text-main); transition: 0.2s; border: 1px solid #e5e7eb;
+        }
+        .action-btn:hover { background: var(--primary-light); border-color: var(--primary); }
+        .action-btn i { font-size: 20px; color: var(--primary); width: 25px; text-align: center; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); z-index: 1000; }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 15px; }
+            .menu-toggle { display: block !important; }
+        }
+        .menu-toggle { display: none; background: none; border: none; font-size: 24px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fas fa-hospital"></i>
+            <h2 class="translate" data-en="MediCare ERP" data-bn="মেডিকেয়ার ইআরপি">MediCare ERP</h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#" class="active"><i class="fas fa-th-large"></i> <span class="translate" data-en="Dashboard" data-bn="ড্যাশবোর্ড">Dashboard</span></a></li>
+            <li><a href="#"><i class="fas fa-user-injured"></i> <span class="translate" data-en="Patients" data-bn="রোগী">Patients</span></a></li>
+            <li><a href="#"><i class="fas fa-user-md"></i> <span class="translate" data-en="Doctors" data-bn="ডাক্তার">Doctors</span></a></li>
+            <li><a href="#"><i class="fas fa-calendar-check"></i> <span class="translate" data-en="Appointments" data-bn="অ্যাপয়েন্টমেন্ট">Appointments</span></a></li>
+            <li><a href="#"><i class="fas fa-pills"></i> <span class="translate" data-en="Pharmacy" data-bn="ফার্মেসি">Pharmacy</span></a></li>
+            <li><a href="#"><i class="fas fa-bed"></i> <span class="translate" data-en="Ward/Bed" data-bn="ওয়ার্ড/বেড">Ward/Bed</span></a></li>
+            <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> <span class="translate" data-en="Billing" data-bn="বিলিং">Billing</span></a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> <span class="translate" data-en="Reports" data-bn="রিপোর্ট">Reports</span></a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> <span class="translate" data-en="Settings" data-bn="সেটিংস">Settings</span></a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Topbar -->
+        <header class="topbar">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <h1 class="translate" data-en="Dashboard Overview" data-bn="ড্যাশবোর্ড ওভারভিউ">Dashboard Overview</h1>
+            </div>
+            <div class="topbar-right">
+                <button class="lang-toggle" onclick="toggleLanguage()">
+                    <i class="fas fa-globe"></i> <span id="lang-btn-text">বাংলা</span>
+                </button>
+                <div class="profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin+User&background=2563eb&color=fff" alt="Admin">
+                    <div>
+                        <p style="font-weight: 600; font-size: 14px;" class="translate" data-en="Dr. Admin" data-bn="ড. এডমিন">Dr. Admin</p>
+                        <p style="font-size: 12px; color: var(--text-muted);" class="translate" data-en="Super Admin" data-bn="সুপার এডমিন">Super Admin</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Cards -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3 class="translate" data-en="Total Patients" data-bn="মোট রোগী">Total Patients</h3>
+                    <h2>1,245</h2>
+                </div>
+                <div class="stat-icon bg-blue"><i class="fas fa-user-injured"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3 class="translate" data-en="Available Doctors" data-bn="কর্মরত ডাক্তার">Available Doctors</h3>
+                    <h2>48</h2>
+                </div>
+                <div class="stat-icon bg-green"><i class="fas fa-user-md"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3 class="translate" data-en="Today's Appointments" data-bn="আজকের অ্যাপয়েন্টমেন্ট">Today's Appointments</h3>
+                    <h2>85</h2>
+                </div>
+                <div class="stat-icon bg-yellow"><i class="fas fa-calendar-check"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-info">
+                    <h3 class="translate" data-en="Total Revenue" data-bn="মোট আয়">Total Revenue</h3>
+                    <h2>৳ 4,50,000</h2>
+                </div>
+                <div class="stat-icon bg-red"><i class="fas fa-hand-holding-usd"></i></div>
+            </div>
+        </section>
+
+        <!-- Content Grid -->
+        <section class="content-grid">
+            <!-- Recent Appointments -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="translate" data-en="Recent Appointments" data-bn="সাম্প্রতিক অ্যাপয়েন্টমেন্ট">Recent Appointments</h3>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 14px;" class="translate" data-en="View All" data-bn="সবগুলো দেখুন">View All</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="translate" data-en="Patient Name" data-bn="রোগীর নাম">Patient Name</th>
+                            <th class="translate" data-en="Doctor" data-bn="ডাক্তার">Doctor</th>
+                            <th class="translate" data-en="Time" data-bn="সময়">Time</th>
+                            <th class="translate" data-en="Status" data-bn="অবস্থা">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="translate" data-en="Rahim Uddin" data-bn="রহিম উদ্দিন">Rahim Uddin</td>
+                            <td class="translate" data-en="Dr. Sarah Khan" data-bn="ড. সারা খান">Dr. Sarah Khan</td>
+                            <td>10:00 AM</td>
+                            <td><span class="badge badge-success translate" data-en="Confirmed" data-bn="নিশ্চিত">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td class="translate" data-en="Karim Hossain" data-bn="করিম হোসেন">Karim Hossain</td>
+                            <td class="translate" data-en="Dr. John Doe" data-bn="ড. জন ডো">Dr. John Doe</td>
+                            <td>11:30 AM</td>
+                            <td><span class="badge badge-warning translate" data-en="Pending" data-bn="অপেক্ষমান">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td class="translate" data-en="Fatema Begum" data-bn="ফাতেমা বেগম">Fatema Begum</td>
+                            <td class="translate" data-en="Dr. Ahmed Ali" data-bn="ড. আহমেদ আলী">Dr. Ahmed Ali</td>
+                            <td>02:00 PM</td>
+                            <td><span class="badge badge-success translate" data-en="Confirmed" data-bn="নিশ্চিত">Confirmed</span></td>
+                        </tr>
+                        <tr>
+                            <td class="translate" data-en="Jamal Mia" data-bn="জামাল মিয়া">Jamal Mia</td>
+                            <td class="translate" data-en="Dr. Sarah Khan" data-bn="ড. সারা খান">Dr. Sarah Khan</td>
+                            <td>04:15 PM</td>
+                            <td><span class="badge badge-danger translate" data-en="Cancelled" data-bn="বাতিল">Cancelled</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="translate" data-en="Quick Actions" data-bn="দ্রুত কাজ">Quick Actions</h3>
+                </div>
+                <div class="quick-actions">
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="translate" data-en="Add New Patient" data-bn="নতুন রোগী যোগ করুন">Add New Patient</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span class="translate" data-en="Create Appointment" data-bn="অ্যাপয়েন্টমেন্ট তৈরি করুন">Create Appointment</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-prescription"></i>
+                        <span class="translate" data-en="Write Prescription" data-bn="প্রিসক্রিপশন লিখুন">Write Prescription</span>
+                    </a>
+                    <a href="#" class="action-btn">
+                        <i class="fas fa-cash-register"></i>
+                        <span class="translate" data-en="Generate Bill" data-bn="বিল তৈরি করুন">Generate Bill</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let currentLang = 'bn'; // Default language set to Bengali
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'bn' : 'en';
+            applyLanguage();
+        }
+
+        function applyLanguage() {
+            const elements = document.querySelectorAll('.translate');
+            elements.forEach(el => {
+                el.textContent = el.getAttribute('data-' + currentLang);
+            });
+            
+            // Update button text
+            const btnText = document.getElementById('lang-btn-text');
+            btnText.textContent = currentLang === 'en' ? 'বাংলা' : 'English';
+            
+            // Update HTML lang attribute for accessibility
+            document.documentElement.lang = currentLang;
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        // Initialize language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyLanguage();
+        });
+    </script>
+</body>
+</html>
