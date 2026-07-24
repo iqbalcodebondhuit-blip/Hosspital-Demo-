@@ -4,163 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Hospital ERP | আধুনিক হাসপাতাল ম্যানেজমেন্ট</title>
-    <!-- Modern Font & Icons -->
+    <!-- Modern Font, Icons & Chart.js -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <style>
         :root {
-            --primary: #3b82f6;
-            --primary-dark: #2563eb;
-            --primary-light: #eff6ff;
-            --success: #10b981;
-            --success-light: #d1fae5;
-            --warning: #f59e0b;
-            --warning-light: #fef3c7;
-            --danger: #ef4444;
-            --danger-light: #fee2e2;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --sidebar-bg: #0f172a;
-            --sidebar-text: #94a3b8;
+            --primary: #3b82f6; --primary-dark: #2563eb; --primary-light: #eff6ff;
+            --success: #10b981; --success-light: #d1fae5;
+            --warning: #f59e0b; --warning-light: #fef3c7;
+            --danger: #ef4444; --danger-light: #fee2e2;
+            --bg: #f8fafc; --card-bg: #ffffff; --text-main: #0f172a; --text-muted: #64748b;
+            --border: #e2e8f0; --sidebar-bg: #0f172a; --sidebar-text: #94a3b8;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background-color: var(--bg); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
 
-        /* --- Modern Sidebar --- */
-        .sidebar {
-            width: 270px; background: var(--sidebar-bg); color: var(--sidebar-text);
-            position: fixed; height: 100vh; overflow-y: auto; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000; display: flex; flex-direction: column;
-        }
+        /* Sidebar & Layout (Same as before, optimized) */
+        .sidebar { width: 270px; background: var(--sidebar-bg); color: var(--sidebar-text); position: fixed; height: 100vh; overflow-y: auto; transition: 0.3s; z-index: 1000; display: flex; flex-direction: column; }
         .logo { padding: 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #1e293b; }
-        .logo-icon { 
-            width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #60a5fa); 
-            border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px;
-        }
-        .logo h2 { font-size: 18px; font-weight: 700; color: #f8fafc; letter-spacing: -0.5px; }
-        
+        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #60a5fa); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+        .logo h2 { font-size: 18px; font-weight: 700; color: #f8fafc; }
         .nav-menu { list-style: none; padding: 16px 12px; flex: 1; }
-        .nav-link {
-            display: flex; align-items: center; gap: 14px; padding: 12px 16px;
-            color: var(--sidebar-text); text-decoration: none; border-radius: 10px; 
-            transition: all 0.2s ease; font-size: 14px; font-weight: 500; margin-bottom: 4px; cursor: pointer;
-        }
-        .nav-link i { width: 20px; text-align: center; font-size: 16px; transition: 0.2s; }
+        .nav-link { display: flex; align-items: center; gap: 14px; padding: 12px 16px; color: var(--sidebar-text); text-decoration: none; border-radius: 10px; transition: 0.2s; font-size: 14px; font-weight: 500; margin-bottom: 4px; cursor: pointer; }
         .nav-link:hover { background: rgba(255, 255, 255, 0.05); color: #f8fafc; }
-        .nav-link.active { 
-            background: rgba(59, 130, 246, 0.15); color: #60a5fa; 
-            border-left: 3px solid var(--primary);
-        }
+        .nav-link.active { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border-left: 3px solid var(--primary); }
         .nav-link.active i { color: #60a5fa; }
 
-        /* --- Main Content --- */
         .main-content { margin-left: 270px; width: calc(100% - 270px); padding: 24px 32px; transition: 0.3s; }
-        
-        .topbar { 
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; 
-            background: var(--card-bg); padding: 16px 24px; border-radius: 16px; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border);
-        }
-        .topbar h1 { font-size: 22px; font-weight: 700; color: var(--text-main); }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; background: var(--card-bg); padding: 16px 24px; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--border); }
+        .topbar h1 { font-size: 22px; font-weight: 700; }
         .topbar-right { display: flex; align-items: center; gap: 16px; }
-        
-        .lang-toggle { 
-            background: var(--primary-light); color: var(--primary-dark); border: 1px solid #bfdbfe; 
-            padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; 
-            display: flex; align-items: center; gap: 8px; transition: 0.2s;
-        }
+        .lang-toggle { background: var(--primary-light); color: var(--primary-dark); border: 1px solid #bfdbfe; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
         .lang-toggle:hover { background: #dbeafe; }
-
         .profile { display: flex; align-items: center; gap: 12px; padding-left: 16px; border-left: 1px solid var(--border); }
-        .profile img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-light); }
-        .profile-info p { font-weight: 600; font-size: 14px; color: var(--text-main); }
+        .profile img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary-light); }
+        .profile-info p { font-weight: 600; font-size: 14px; }
         .profile-info span { font-size: 12px; color: var(--text-muted); }
 
-        /* --- Sections & Animation --- */
+        /* Sections & Animation */
         .content-section { display: none; animation: slideUp 0.4s ease-out; }
         .content-section.active { display: block; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- Stats Cards --- */
+        /* Modern Stats Cards with Trends */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px; }
-        .stat-card { 
-            background: var(--card-bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: flex-start; transition: transform 0.2s, box-shadow 0.2s;
-        }
+        .stat-card { background: var(--card-bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-start; transition: 0.2s; }
         .stat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
         .stat-info h3 { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-info h2 { font-size: 28px; font-weight: 700; color: var(--text-main); }
-        .stat-icon { 
-            width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; 
-        }
+        .stat-info h2 { font-size: 28px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+        .trend { font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .trend.up { color: var(--success); }
+        .trend.down { color: var(--danger); }
+        .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
         .bg-blue { background: var(--primary-light); color: var(--primary); }
         .bg-green { background: var(--success-light); color: var(--success); }
         .bg-yellow { background: var(--warning-light); color: var(--warning); }
         .bg-red { background: var(--danger-light); color: var(--danger); }
 
-        /* --- Cards & Forms --- */
-        .card { background: var(--card-bg); padding: 28px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .card-header h3 { font-size: 18px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        /* Dashboard Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
+        .grid-2-equal { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+        
+        .card { background: var(--card-bg); padding: 24px; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .card-header h3 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .card-header h3 i { color: var(--primary); }
 
+        /* Chart Container */
+        .chart-container { position: relative; height: 300px; width: 100%; }
+
+        /* Activity Timeline */
+        .activity-feed { list-style: none; }
+        .activity-item { display: flex; gap: 16px; padding-bottom: 20px; border-left: 2px solid var(--border); margin-left: 8px; padding-left: 20px; position: relative; }
+        .activity-item:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
+        .activity-dot { position: absolute; left: -7px; top: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); border: 2px solid var(--card-bg); }
+        .activity-dot.green { background: var(--success); }
+        .activity-dot.red { background: var(--danger); }
+        .activity-dot.yellow { background: var(--warning); }
+        .activity-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .activity-content p { font-size: 13px; color: var(--text-muted); }
+        .activity-time { font-size: 11px; color: var(--text-muted); margin-top: 4px; display: block; }
+
+        /* Alert Cards */
+        .alert-box { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; margin-bottom: 12px; font-size: 13px; font-weight: 500; }
+        .alert-warning { background: var(--warning-light); color: #92400e; border: 1px solid #fcd34d; }
+        .alert-danger { background: var(--danger-light); color: #991b1b; border: 1px solid #fca5a5; }
+        .alert-box i { font-size: 18px; }
+
+        /* Forms & Tables (Same modern style) */
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
-        .form-group input, .form-group select { 
-            width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; 
-            font-size: 14px; background: #f8fafc; transition: all 0.2s; color: var(--text-main);
-        }
-        .form-group input:focus, .form-group select:focus { 
-            border-color: var(--primary); background: #fff; outline: none; 
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); 
-        }
-
-        .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; background: #f8fafc; transition: 0.2s; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); background: #fff; outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
         .btn-primary { background: var(--primary); color: #fff; }
         .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
         .btn-danger { background: var(--danger-light); color: var(--danger); padding: 8px 12px; font-size: 13px; border-radius: 8px; }
         .btn-danger:hover { background: var(--danger); color: #fff; }
-
-        /* --- Modern Table --- */
         .table-container { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
         th, td { padding: 16px 20px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
         th { background: #f8fafc; color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
         tr:last-child td { border-bottom: none; }
         tr:hover td { background: #f8fafc; }
-        
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; display: inline-block; }
-        .badge-success { background: var(--success-light); color: #065f46; }
-        .badge-warning { background: var(--warning-light); color: #92400e; }
-        .badge-danger { background: var(--danger-light); color: #991b1b; }
 
-        /* --- Mobile Responsive --- */
+        /* Mobile */
         .menu-toggle { display: none; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-main); padding: 8px; border-radius: 8px; }
-        .menu-toggle:hover { background: var(--bg); }
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; backdrop-filter: blur(2px); }
-
-        @media (max-width: 1024px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        @media (max-width: 1024px) { .grid-2, .grid-2-equal { grid-template-columns: 1fr; } }
         @media (max-width: 768px) {
             .sidebar { transform: translateX(-100%); width: 280px; }
             .sidebar.active { transform: translateX(0); }
             .sidebar-overlay.active { display: block; }
             .main-content { margin-left: 0; width: 100%; padding: 16px; }
             .menu-toggle { display: block; }
-            .profile { display: none; } /* Hide profile on small mobile for space */
-            .stats-grid { grid-template-columns: 1fr; }
+            .profile { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Mobile Overlay -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <!-- Sidebar -->
@@ -199,64 +164,135 @@
             </div>
         </header>
 
-        <!-- 1. Dashboard -->
+        <!-- 1. MODERN DASHBOARD -->
         <section id="dashboard" class="content-section active">
+            <!-- Stats with Trends -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-info"><h3 class="translate" data-en="Total Patients" data-bn="মোট রোগী">Total Patients</h3><h2 id="stat-patients">0</h2></div>
+                    <div class="stat-info">
+                        <h3 class="translate" data-en="Total Patients" data-bn="মোট রোগী">Total Patients</h3>
+                        <h2 id="stat-patients">0</h2>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 12% <span class="translate" data-en="vs last month" data-bn="গত মাসের তুলনায়">vs last month</span></span>
+                    </div>
                     <div class="stat-icon bg-blue"><i class="fas fa-user-injured"></i></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-info"><h3 class="translate" data-en="Medicines in Stock" data-bn="স্টকে ওষুধ">Medicines in Stock</h3><h2 id="stat-meds">0</h2></div>
+                    <div class="stat-info">
+                        <h3 class="translate" data-en="Medicines in Stock" data-bn="স্টকে ওষুধ">Medicines in Stock</h3>
+                        <h2 id="stat-meds">0</h2>
+                        <span class="trend down"><i class="fas fa-arrow-down"></i> 3% <span class="translate" data-en="vs last month" data-bn="গত মাসের তুলনায়">vs last month</span></span>
+                    </div>
                     <div class="stat-icon bg-green"><i class="fas fa-pills"></i></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-info"><h3 class="translate" data-en="Today's Appointments" data-bn="আজকের অ্যাপয়েন্টমেন্ট">Today's Appointments</h3><h2 id="stat-apps">0</h2></div>
+                    <div class="stat-info">
+                        <h3 class="translate" data-en="Today's Appointments" data-bn="আজকের অ্যাপয়েন্টমেন্ট">Today's Appointments</h3>
+                        <h2 id="stat-apps">0</h2>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 8% <span class="translate" data-en="vs yesterday" data-bn="গতকালের তুলনায়">vs yesterday</span></span>
+                    </div>
                     <div class="stat-icon bg-yellow"><i class="fas fa-calendar-check"></i></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-info"><h3 class="translate" data-en="Total Revenue" data-bn="মোট আয়">Total Revenue</h3><h2 id="stat-rev">৳ 0</h2></div>
+                    <div class="stat-info">
+                        <h3 class="translate" data-en="Total Revenue" data-bn="মোট আয়">Total Revenue</h3>
+                        <h2 id="stat-rev">৳ 0</h2>
+                        <span class="trend up"><i class="fas fa-arrow-up"></i> 18% <span class="translate" data-en="vs last month" data-bn="গত মাসের তুলনায়">vs last month</span></span>
+                    </div>
                     <div class="stat-icon bg-red"><i class="fas fa-hand-holding-usd"></i></div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header"><h3><i class="fas fa-info-circle"></i> <span class="translate" data-en="Welcome to Modern ERP" data-bn="আধুনিক ইআরপি তে স্বাগতম">Welcome to Modern ERP</span></h3></div>
-                <p style="color: var(--text-muted); line-height: 1.6;" class="translate" 
-                   data-en="This is a fully functional, modern Hospital Management System. Use the sidebar to manage Patients, Appointments, Pharmacy, and Billing. All data is securely saved in your browser's local storage." 
-                   data-bn="এটি একটি সম্পূর্ণ কার্যকরী, আধুনিক হাসপাতাল ম্যানেজমেন্ট সিস্টেম। রোগী, অ্যাপয়েন্টমেন্ট, ফার্মেসি এবং বিলিং পরিচালনা করতে সাইডবার ব্যবহার করুন। সমস্ত ডাটা আপনার ব্রাউজারের লোকাল স্টোরেজে নিরাপদে সংরক্ষিত থাকে।">
-                   This is a fully functional, modern Hospital Management System. Use the sidebar to manage Patients, Appointments, Pharmacy, and Billing. All data is securely saved in your browser's local storage.
-                </p>
+
+            <!-- Charts Row -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> <span class="translate" data-en="Monthly Revenue" data-bn="মাসিক আয়">Monthly Revenue</span></h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-pie"></i> <span class="translate" data-en="Patients by Department" data-bn="বিভাগভিত্তিক রোগী">Patients by Department</span></h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="deptChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity & Alerts Row -->
+            <div class="grid-2-equal">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history"></i> <span class="translate" data-en="Recent Activity" data-bn="সাম্প্রতিক কার্যক্রম">Recent Activity</span></h3>
+                    </div>
+                    <ul class="activity-feed">
+                        <li class="activity-item">
+                            <span class="activity-dot green"></span>
+                            <div class="activity-content">
+                                <h4 class="translate" data-en="New Patient Registered" data-bn="নতুন রোগী নিবন্ধিত">New Patient Registered</h4>
+                                <p class="translate" data-en="Rahim Uddin admitted to Cardiology" data-bn="রহিম উদ্দিন কার্ডিওলজি বিভাগে ভর্তি">Rahim Uddin admitted to Cardiology</p>
+                                <span class="activity-time">10 mins ago</span>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-dot yellow"></span>
+                            <div class="activity-content">
+                                <h4 class="translate" data-en="Low Stock Alert" data-bn="স্টক কম থাকার সতর্কতা">Low Stock Alert</h4>
+                                <p class="translate" data-en="Paracetamol 500mg stock is below 50 units" data-bn="প্যারাসিটামল ৫০০ মিগ্রা স্টক ৫০ ইউনিটের নিচে">Paracetamol 500mg stock is below 50 units</p>
+                                <span class="activity-time">1 hour ago</span>
+                            </div>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-dot"></span>
+                            <div class="activity-content">
+                                <h4 class="translate" data-en="Bill Generated" data-bn="বিল তৈরি হয়েছে">Bill Generated</h4>
+                                <p class="translate" data-en="Invoice #88392 generated for Fatema Begum" data-bn="ফাতেমা বেগমের জন্য ইনভয়েস #৮৮৩৯২ তৈরি">Invoice #88392 generated for Fatema Begum</p>
+                                <span class="activity-time">2 hours ago</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-exclamation-triangle"></i> <span class="translate" data-en="Critical Alerts" data-bn="জরুরি সতর্কতা">Critical Alerts</span></h3>
+                    </div>
+                    <div class="alert-box alert-danger">
+                        <i class="fas fa-bed"></i>
+                        <span class="translate" data-en="ICU Beds: Only 2 beds available!" data-bn="আইসিইউ বেড: মাত্র ২টি বেড খালি আছে!">ICU Beds: Only 2 beds available!</span>
+                    </div>
+                    <div class="alert-box alert-warning">
+                        <i class="fas fa-pills"></i>
+                        <span class="translate" data-en="Antibiotics stock will expire in 15 days" data-bn="অ্যান্টিবায়োটিক স্টক ১৫ দিনের মধ্যে মেয়াদোত্তীর্ণ হবে">Antibiotics stock will expire in 15 days</span>
+                    </div>
+                    <div class="alert-box alert-warning">
+                        <i class="fas fa-user-md"></i>
+                        <span class="translate" data-en="Dr. John Doe is on leave today" data-bn="ড. জন ডো আজ ছুটিতে আছেন">Dr. John Doe is on leave today</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- 2. Patients -->
+        <!-- 2. Patients (Simplified for brevity, same logic applies) -->
         <section id="patients" class="content-section">
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-user-plus"></i> <span class="translate" data-en="Register New Patient" data-bn="নতুন রোগী নিবন্ধন">Register New Patient</span></h3></div>
                 <form id="form-patient">
                     <div class="form-row">
-                        <div class="form-group"><label class="translate" data-en="Full Name" data-bn="পূর্ণ নাম">Full Name</label><input type="text" id="p-name" required placeholder="Ex: Rahim Uddin"></div>
-                        <div class="form-group"><label class="translate" data-en="Age" data-bn="বয়স">Age</label><input type="number" id="p-age" required placeholder="Ex: 35"></div>
-                        <div class="form-group"><label class="translate" data-en="Phone Number" data-bn="ফোন নম্বর">Phone Number</label><input type="text" id="p-phone" required placeholder="Ex: 017XXXXXXXX"></div>
-                        <div class="form-group"><label class="translate" data-en="Disease / Issue" data-bn="রোগ / সমস্যা">Disease / Issue</label><input type="text" id="p-disease" required placeholder="Ex: Fever, Cold"></div>
+                        <div class="form-group"><label class="translate" data-en="Full Name" data-bn="পূর্ণ নাম">Full Name</label><input type="text" id="p-name" required></div>
+                        <div class="form-group"><label class="translate" data-en="Age" data-bn="বয়স">Age</label><input type="number" id="p-age" required></div>
+                        <div class="form-group"><label class="translate" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" id="p-phone" required></div>
+                        <div class="form-group"><label class="translate" data-en="Disease" data-bn="রোগ">Disease</label><input type="text" id="p-disease" required></div>
                     </div>
                     <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="translate" data-en="Save Patient" data-bn="রোগী সেভ করুন">Save Patient</span></button>
                 </form>
             </div>
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-list"></i> <span class="translate" data-en="Patient List" data-bn="রোগীর তালিকা">Patient List</span></h3></div>
-                <div class="table-container">
-                    <table>
-                        <thead><tr>
-                            <th>ID</th><th class="translate" data-en="Name" data-bn="নাম">Name</th>
-                            <th class="translate" data-en="Age" data-bn="বয়স">Age</th>
-                            <th class="translate" data-en="Phone" data-bn="ফোন">Phone</th>
-                            <th class="translate" data-en="Disease" data-bn="রোগ">Disease</th>
-                            <th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th>
-                        </tr></thead>
-                        <tbody id="table-patients"></tbody>
-                    </table>
-                </div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="translate" data-en="Name" data-bn="নাম">Name</th><th class="translate" data-en="Age" data-bn="বয়স">Age</th><th class="translate" data-en="Phone" data-bn="ফোন">Phone</th><th class="translate" data-en="Disease" data-bn="রোগ">Disease</th><th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="table-patients"></tbody></table></div>
             </div>
         </section>
 
@@ -267,9 +303,7 @@
                 <form id="form-app">
                     <div class="form-row">
                         <div class="form-group"><label class="translate" data-en="Patient Name" data-bn="রোগীর নাম">Patient Name</label><input type="text" id="a-name" required></div>
-                        <div class="form-group"><label class="translate" data-en="Assign Doctor" data-bn="ডাক্তার নির্বাচন">Assign Doctor</label>
-                            <select id="a-doc"><option>Dr. Sarah Khan</option><option>Dr. John Doe</option><option>Dr. Ahmed Ali</option></select>
-                        </div>
+                        <div class="form-group"><label class="translate" data-en="Doctor" data-bn="ডাক্তার">Doctor</label><select id="a-doc"><option>Dr. Sarah Khan</option><option>Dr. John Doe</option><option>Dr. Ahmed Ali</option></select></div>
                         <div class="form-group"><label class="translate" data-en="Date" data-bn="তারিখ">Date</label><input type="date" id="a-date" required></div>
                         <div class="form-group"><label class="translate" data-en="Time" data-bn="সময়">Time</label><input type="time" id="a-time" required></div>
                     </div>
@@ -278,18 +312,7 @@
             </div>
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-list"></i> <span class="translate" data-en="Appointment List" data-bn="অ্যাপয়েন্টমেন্ট তালিকা">Appointment List</span></h3></div>
-                <div class="table-container">
-                    <table>
-                        <thead><tr>
-                            <th>ID</th><th class="translate" data-en="Patient" data-bn="রোগী">Patient</th>
-                            <th class="translate" data-en="Doctor" data-bn="ডাক্তার">Doctor</th>
-                            <th class="translate" data-en="Date" data-bn="তারিখ">Date</th>
-                            <th class="translate" data-en="Time" data-bn="সময়">Time</th>
-                            <th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th>
-                        </tr></thead>
-                        <tbody id="table-apps"></tbody>
-                    </table>
-                </div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="translate" data-en="Patient" data-bn="রোগী">Patient</th><th class="translate" data-en="Doctor" data-bn="ডাক্তার">Doctor</th><th class="translate" data-en="Date" data-bn="তারিখ">Date</th><th class="translate" data-en="Time" data-bn="সময়">Time</th><th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="table-apps"></tbody></table></div>
             </div>
         </section>
 
@@ -300,29 +323,16 @@
                 <form id="form-med">
                     <div class="form-row">
                         <div class="form-group"><label class="translate" data-en="Medicine Name" data-bn="ওষুধের নাম">Medicine Name</label><input type="text" id="m-name" required></div>
-                        <div class="form-group"><label class="translate" data-en="Category" data-bn="ক্যাটাগরি">Category</label>
-                            <select id="m-cat"><option>Tablet</option><option>Syrup</option><option>Injection</option><option>Capsule</option><option>Ointment</option></select>
-                        </div>
-                        <div class="form-group"><label class="translate" data-en="Stock Quantity" data-bn="স্টক পরিমাণ">Stock Quantity</label><input type="number" id="m-stock" required></div>
-                        <div class="form-group"><label class="translate" data-en="Price per Unit (৳)" data-bn="প্রতি ইউনিট দাম (৳)">Price per Unit (৳)</label><input type="number" id="m-price" required></div>
+                        <div class="form-group"><label class="translate" data-en="Category" data-bn="ক্যাটাগরি">Category</label><select id="m-cat"><option>Tablet</option><option>Syrup</option><option>Injection</option><option>Capsule</option></select></div>
+                        <div class="form-group"><label class="translate" data-en="Stock" data-bn="স্টক">Stock</label><input type="number" id="m-stock" required></div>
+                        <div class="form-group"><label class="translate" data-en="Price (৳)" data-bn="দাম (৳)">Price (৳)</label><input type="number" id="m-price" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="translate" data-en="Save to Inventory" data-bn="ইনভেন্টরিতে সেভ করুন">Save to Inventory</span></button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="translate" data-en="Save Medicine" data-bn="ওষুধ সেভ করুন">Save Medicine</span></button>
                 </form>
             </div>
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-list"></i> <span class="translate" data-en="Medicine Inventory" data-bn="ওষুধের ইনভেন্টরি">Medicine Inventory</span></h3></div>
-                <div class="table-container">
-                    <table>
-                        <thead><tr>
-                            <th>ID</th><th class="translate" data-en="Name" data-bn="নাম">Name</th>
-                            <th class="translate" data-en="Category" data-bn="ক্যাটাগরি">Category</th>
-                            <th class="translate" data-en="Stock" data-bn="স্টক">Stock</th>
-                            <th class="translate" data-en="Price" data-bn="দাম">Price</th>
-                            <th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th>
-                        </tr></thead>
-                        <tbody id="table-meds"></tbody>
-                    </table>
-                </div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="translate" data-en="Name" data-bn="নাম">Name</th><th class="translate" data-en="Category" data-bn="ক্যাটাগরি">Category</th><th class="translate" data-en="Stock" data-bn="স্টক">Stock</th><th class="translate" data-en="Price" data-bn="দাম">Price</th><th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="table-meds"></tbody></table></div>
             </div>
         </section>
 
@@ -333,26 +343,15 @@
                 <form id="form-bill">
                     <div class="form-row">
                         <div class="form-group"><label class="translate" data-en="Patient Name" data-bn="রোগীর নাম">Patient Name</label><input type="text" id="b-name" required></div>
-                        <div class="form-group"><label class="translate" data-en="Service / Medicine Item" data-bn="সেবা / ওষুধের নাম">Service / Medicine Item</label><input type="text" id="b-item" required></div>
-                        <div class="form-group"><label class="translate" data-en="Total Amount (৳)" data-bn="মোট পরিমাণ (৳)">Total Amount (৳)</label><input type="number" id="b-amount" required></div>
+                        <div class="form-group"><label class="translate" data-en="Service / Item" data-bn="সেবা / আইটেম">Service / Item</label><input type="text" id="b-item" required></div>
+                        <div class="form-group"><label class="translate" data-en="Amount (৳)" data-bn="পরিমাণ (৳)">Amount (৳)</label><input type="number" id="b-amount" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-invoice"></i> <span class="translate" data-en="Generate & Save Bill" data-bn="বিল তৈরি ও সেভ করুন">Generate & Save Bill</span></button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-invoice"></i> <span class="translate" data-en="Generate Bill" data-bn="বিল তৈরি করুন">Generate Bill</span></button>
                 </form>
             </div>
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-history"></i> <span class="translate" data-en="Billing History" data-bn="বিলিং ইতিহাস">Billing History</span></h3></div>
-                <div class="table-container">
-                    <table>
-                        <thead><tr>
-                            <th>Invoice #</th><th class="translate" data-en="Patient" data-bn="রোগী">Patient</th>
-                            <th class="translate" data-en="Item / Service" data-bn="আইটেম / সেবা">Item / Service</th>
-                            <th class="translate" data-en="Amount" data-bn="পরিমাণ">Amount</th>
-                            <th class="translate" data-en="Date" data-bn="তারিখ">Date</th>
-                            <th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th>
-                        </tr></thead>
-                        <tbody id="table-bills"></tbody>
-                    </table>
-                </div>
+                <div class="table-container"><table><thead><tr><th>Invoice</th><th class="translate" data-en="Patient" data-bn="রোগী">Patient</th><th class="translate" data-en="Item" data-bn="আইটেম">Item</th><th class="translate" data-en="Amount" data-bn="পরিমাণ">Amount</th><th class="translate" data-en="Date" data-bn="তারিখ">Date</th><th class="translate" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="table-bills"></tbody></table></div>
             </div>
         </section>
     </main>
@@ -360,13 +359,28 @@
     <script>
         // --- 1. Language Toggle ---
         let currentLang = 'bn';
+        let revenueChartInstance = null;
+        let deptChartInstance = null;
+
         function toggleLanguage() {
             currentLang = currentLang === 'en' ? 'bn' : 'en';
             document.getElementById('lang-btn-text').textContent = currentLang === 'en' ? 'বাংলা' : 'English';
             document.querySelectorAll('.translate').forEach(el => {
                 el.textContent = el.getAttribute('data-' + currentLang);
             });
-            renderAll(); // Re-render to update empty messages
+            renderAll();
+            updateChartsLanguage(); // Update chart labels dynamically
+        }
+
+        function updateChartsLanguage() {
+            if(revenueChartInstance) {
+                revenueChartInstance.options.plugins.title.text = currentLang === 'en' ? 'Monthly Revenue (in ৳)' : 'মাসিক আয় (৳ তে)';
+                revenueChartInstance.update();
+            }
+            if(deptChartInstance) {
+                deptChartInstance.options.plugins.title.text = currentLang === 'en' ? 'Patients by Department' : 'বিভাগভিত্তিক রোগী';
+                deptChartInstance.update();
+            }
         }
 
         // --- 2. Navigation & Sidebar ---
@@ -382,8 +396,6 @@
                 document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
                 link.classList.add('active');
                 document.getElementById(link.dataset.target).classList.add('active');
-                
-                // Close sidebar on mobile after click
                 if(window.innerWidth <= 768) toggleSidebar();
             });
         });
@@ -431,8 +443,7 @@
 
         // --- 5. Delete Function ---
         function deleteItem(key, id) {
-            const confirmMsg = currentLang === 'en' ? 'Are you sure you want to delete this record?' : 'আপনি কি নিশ্চিত যে আপনি এই রেকর্ডটি মুছে ফেলতে চান?';
-            if(confirm(confirmMsg)) {
+            if(confirm(currentLang === 'en' ? 'Delete this record?' : 'এই রেকর্ডটি মুছে ফেলবেন?')) {
                 saveData(key, getData(key).filter(item => item.id !== id));
                 renderAll();
             }
@@ -442,40 +453,81 @@
         function renderAll() {
             const p = getData('patients'), a = getData('apps'), m = getData('meds'), b = getData('bills');
 
-            // Update Stats
             document.getElementById('stat-patients').textContent = p.length;
             document.getElementById('stat-meds').textContent = m.reduce((sum, x) => sum + parseInt(x.stock || 0), 0);
             document.getElementById('stat-apps').textContent = a.length;
             document.getElementById('stat-rev').textContent = '৳ ' + b.reduce((sum, x) => sum + parseInt(x.amount || 0), 0).toLocaleString('en-BD');
 
-            // Render Tables
-            const emptyMsg = currentLang === 'en' ? 'No records found. Add some data!' : 'কোনো রেকর্ড পাওয়া যায়নি। নতুন ডাটা যোগ করুন!';
-            
+            const emptyMsg = currentLang === 'en' ? 'No records found.' : 'কোনো রেকর্ড নেই।';
             const createRow = (data, fields, key) => data.length ? data.map(x => {
                 let cells = fields.map(f => `<td>${f(x)}</td>`).join('');
                 return `<tr>${cells}<td><button class="btn btn-danger" onclick="deleteItem('${key}', ${x.id})"><i class="fas fa-trash-alt"></i></button></td></tr>`;
             }).join('') : `<tr><td colspan="${fields.length + 1}" style="text-align:center; color:var(--text-muted); padding: 30px;">${emptyMsg}</td></tr>`;
 
-            document.getElementById('table-patients').innerHTML = createRow(p, [
-                x => String(x.id).slice(-4), x => x.name, x => x.age, x => x.phone, x => x.disease
-            ], 'patients');
+            document.getElementById('table-patients').innerHTML = createRow(p, [x => String(x.id).slice(-4), x => x.name, x => x.age, x => x.phone, x => x.disease], 'patients');
+            document.getElementById('table-apps').innerHTML = createRow(a, [x => String(x.id).slice(-4), x => x.name, x => x.doc, x => x.date, x => x.time], 'apps');
+            document.getElementById('table-meds').innerHTML = createRow(m, [x => String(x.id).slice(-4), x => x.name, x => x.cat, x => x.stock, x => `৳ ${x.price}`], 'meds');
+            document.getElementById('table-bills').innerHTML = createRow(b, [x => `#${String(x.id).slice(-5)}`, x => x.name, x => x.item, x => `৳ ${x.amount}`, x => x.date], 'bills');
+        }
 
-            document.getElementById('table-apps').innerHTML = createRow(a, [
-                x => String(x.id).slice(-4), x => x.name, x => x.doc, x => x.date, x => x.time
-            ], 'apps');
+        // --- 7. Initialize Modern Charts ---
+        function initCharts() {
+            const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+            revenueChartInstance = new Chart(ctxRevenue, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: currentLang === 'en' ? 'Revenue (৳)' : 'আয় (৳)',
+                        data: [150000, 180000, 160000, 210000, 240000, 280000],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: currentLang === 'en' ? 'Monthly Revenue (in ৳)' : 'মাসিক আয় (৳ তে)', font: { size: 14, weight: '600' } }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
 
-            document.getElementById('table-meds').innerHTML = createRow(m, [
-                x => String(x.id).slice(-4), x => x.name, x => x.cat, x => x.stock, x => `৳ ${x.price}`
-            ], 'meds');
-
-            document.getElementById('table-bills').innerHTML = createRow(b, [
-                x => `#${String(x.id).slice(-5)}`, x => x.name, x => x.item, x => `৳ ${x.amount}`, x => x.date
-            ], 'bills');
+            const ctxDept = document.getElementById('deptChart').getContext('2d');
+            deptChartInstance = new Chart(ctxDept, {
+                type: 'doughnut',
+                data: {
+                    labels: currentLang === 'en' ? ['Medicine', 'Surgery', 'Cardiology', 'Pediatrics'] : ['মেডিসিন', 'সার্জারি', 'কার্ডিওলজি', 'শিশু রোগ'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { usePointStyle: true, padding: 20, font: { size: 12 } } },
+                        title: { display: true, text: currentLang === 'en' ? 'Patients by Department' : 'বিভাগভিত্তিক রোগী', font: { size: 14, weight: '600' } }
+                    }
+                }
+            });
         }
 
         // Initialize
-        renderAll();
-        toggleLanguage(); 
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAll();
+            toggleLanguage(); 
+            initCharts();
+        });
     </script>
 </body>
 </html>
