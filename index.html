@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master Hospital ERP v4.0 | সম্পূর্ণ হাসপাতাল ব্যবস্থাপনা</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Master Hospital ERP v5.0 | সম্পূর্ণ হাসপাতাল ব্যবস্থাপনা</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
@@ -22,10 +22,9 @@
     --border: #334155; --sidebar-bg: #020617; --primary-light: #1e3a5f;
     --success-light: #064e3b; --warning-light: #78350f; --danger-light: #7f1d1d; --purple-light: #4c1d95;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Noto Sans Bengali', sans-serif; }
 body { background: var(--bg); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
-/* Login Screen */
 .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(135deg, #0f172a, #1e3a8a); display: flex; align-items: center; justify-content: center; z-index: 9999; }
 .login-box { background: var(--card-bg); padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 400px; max-width: 90%; }
 .login-logo { text-align: center; margin-bottom: 30px; }
@@ -35,8 +34,9 @@ body { background: var(--bg); color: var(--text-main); display: flex; min-height
 .login-box .form-group { margin-bottom: 16px; }
 .login-box .btn { width: 100%; justify-content: center; padding: 12px; font-size: 14px; }
 .login-hint { background: var(--primary-light); padding: 10px; border-radius: 8px; font-size: 12px; color: var(--primary-dark); margin-top: 16px; text-align: center; }
+.login-lang { text-align: center; margin-top: 12px; }
+.login-lang button { background: none; border: 1px solid var(--border); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; color: var(--text-main); }
 
-/* App Container */
 .app-container { display: none; width: 100%; }
 .app-container.active { display: flex; }
 
@@ -135,19 +135,16 @@ tr:hover td { background: var(--bg); }
 .badge-warning { background: var(--warning-light); color: #92400e; }
 .badge-danger { background: var(--danger-light); color: #991b1b; }
 .badge-info { background: var(--primary-light); color: #1e40af; }
-.badge-purple { background: var(--purple-light); color: #5b21b6; }
 
 .search-box { position: relative; margin-bottom: 12px; }
 .search-box input { width: 100%; padding: 10px 14px 10px 38px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--bg); color: var(--text-main); }
 .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
 
-/* Ward & Beds - FIXED */
 .ward-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
 .ward-tab { padding: 10px 20px; border: 1px solid var(--border); background: var(--card-bg); border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; display: flex; align-items: center; gap: 8px; }
 .ward-tab:hover { border-color: var(--primary); }
 .ward-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 .ward-tab .count { background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 10px; font-size: 11px; }
-.ward-tab.active .count { background: rgba(255,255,255,0.3); }
 
 .bed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
 .bed { padding: 16px 10px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; border: 2px solid transparent; font-size: 12px; font-weight: 600; }
@@ -158,38 +155,12 @@ tr:hover td { background: var(--bg); }
 .bed i { display: block; font-size: 22px; margin-bottom: 6px; }
 .bed .patient-name { font-size: 10px; margin-top: 4px; font-weight: 500; opacity: 0.8; }
 
-.bed-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; padding: 16px; background: var(--bg); border-radius: 10px; }
-.legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
-.legend-color { width: 20px; height: 20px; border-radius: 6px; }
-
-/* Modal */
 .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
 .modal-overlay.active { display: flex; }
 .modal { background: var(--card-bg); padding: 30px; border-radius: 16px; width: 500px; max-width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
 .modal-header h3 { font-size: 18px; }
 .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
-
-/* Patient History */
-.history-tabs { display: flex; gap: 8px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
-.history-tab { padding: 10px 16px; cursor: pointer; font-weight: 600; font-size: 13px; border-bottom: 2px solid transparent; color: var(--text-muted); }
-.history-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
-.history-content { display: none; }
-.history-content.active { display: block; }
-
-/* Print Styles */
-@media print {
-    .sidebar, .topbar, .btn, .card-header, .no-print { display: none !important; }
-    .main-content { margin: 0; padding: 0; }
-    .card { border: none; box-shadow: none; }
-    body { background: white; }
-}
-
-.print-invoice { background: white; color: black; padding: 30px; }
-.print-invoice h2 { text-align: center; margin-bottom: 10px; }
-.print-invoice .hospital-info { text-align: center; margin-bottom: 20px; font-size: 13px; }
-.print-invoice table { width: 100%; margin: 20px 0; border: 1px solid #ddd; }
-.print-invoice th, .print-invoice td { border: 1px solid #ddd; padding: 8px; }
 
 .menu-toggle { display: none; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-main); padding: 6px; border-radius: 6px; }
 .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
@@ -211,22 +182,25 @@ tr:hover td { background: var(--bg); }
     <div class="login-box">
         <div class="login-logo">
             <i class="fas fa-heartbeat"></i>
-            <h2>MediCare ERP</h2>
-            <p>Hospital Management System</p>
+            <h2 class="t" data-en="MediCare ERP" data-bn="মেডিকেয়ার ইআরপি">MediCare ERP</h2>
+            <p class="t" data-en="Hospital Management System" data-bn="হাসপাতাল ব্যবস্থাপনা সিস্টেম">Hospital Management System</p>
         </div>
         <form id="loginForm">
             <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="loginUser" required placeholder="Enter username">
+                <label class="t" data-en="Username" data-bn="ব্যবহারকারীর নাম">Username</label>
+                <input type="text" id="loginUser" required class="t" data-ph-en="Enter username" data-ph-bn="ব্যবহারকারীর নাম লিখুন" placeholder="ব্যবহারকারীর নাম লিখুন">
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="loginPass" required placeholder="Enter password">
+                <label class="t" data-en="Password" data-bn="পাসওয়ার্ড">Password</label>
+                <input type="password" id="loginPass" required class="t" data-ph-en="Enter password" data-ph-bn="পাসওয়ার্ড লিখুন" placeholder="পাসওয়ার্ড লিখুন">
             </div>
-            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> <span class="t" data-en="Login" data-bn="লগইন">Login</span></button>
         </form>
         <div class="login-hint">
-            <strong>Default Login:</strong> admin / admin123
+            <strong class="t" data-en="Default Login:" data-bn="ডিফল্ট লগইন:">Default Login:</strong> admin / admin123
+        </div>
+        <div class="login-lang">
+            <button onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="loginLangText">English</span></button>
         </div>
     </div>
 </div>
@@ -238,45 +212,45 @@ tr:hover td { background: var(--bg); }
     <aside class="sidebar" id="sidebar">
         <div class="logo">
             <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
-            <h2>MediCare ERP</h2>
+            <h2 class="t" data-en="MediCare ERP" data-bn="মেডিকেয়ার ইআরপি">MediCare ERP</h2>
         </div>
         
-        <div class="menu-category">Main</div>
+        <div class="menu-category t" data-en="Main" data-bn="প্রধান">Main</div>
         <ul class="nav-menu" id="navMenu">
-            <li><a class="nav-link active" data-target="dashboard" data-role="all"><i class="fas fa-th-large"></i> <span>Dashboard</span></a></li>
-            <li><a class="nav-link" data-target="patients" data-role="all"><i class="fas fa-user-injured"></i> <span>Patients</span></a></li>
-            <li><a class="nav-link" data-target="doctors" data-role="admin,doctor,receptionist"><i class="fas fa-user-md"></i> <span>Doctors</span></a></li>
-            <li><a class="nav-link" data-target="appointments" data-role="all"><i class="fas fa-calendar-check"></i> <span>Appointments</span></a></li>
+            <li><a class="nav-link active" data-target="dashboard" data-role="all"><i class="fas fa-th-large"></i> <span class="t" data-en="Dashboard" data-bn="ড্যাশবোর্ড">Dashboard</span></a></li>
+            <li><a class="nav-link" data-target="patients" data-role="all"><i class="fas fa-user-injured"></i> <span class="t" data-en="Patients" data-bn="রোগী">Patients</span></a></li>
+            <li><a class="nav-link" data-target="doctors" data-role="admin,doctor,receptionist"><i class="fas fa-user-md"></i> <span class="t" data-en="Doctors" data-bn="ডাক্তার">Doctors</span></a></li>
+            <li><a class="nav-link" data-target="appointments" data-role="all"><i class="fas fa-calendar-check"></i> <span class="t" data-en="Appointments" data-bn="অ্যাপয়েন্টমেন্ট">Appointments</span></a></li>
         </ul>
 
-        <div class="menu-category">Clinical</div>
+        <div class="menu-category t" data-en="Clinical" data-bn="ক্লিনিক্যাল">Clinical</div>
         <ul class="nav-menu">
-            <li><a class="nav-link" data-target="prescriptions" data-role="admin,doctor"><i class="fas fa-prescription"></i> <span>Prescriptions</span></a></li>
-            <li><a class="nav-link" data-target="lab" data-role="admin,doctor,lab"><i class="fas fa-microscope"></i> <span>Lab</span></a></li>
-            <li><a class="nav-link" data-target="ot" data-role="admin,doctor"><i class="fas fa-procedures"></i> <span>OT</span></a></li>
-            <li><a class="nav-link" data-target="blood" data-role="admin,lab"><i class="fas fa-tint"></i> <span>Blood Bank</span></a></li>
+            <li><a class="nav-link" data-target="prescriptions" data-role="admin,doctor"><i class="fas fa-prescription"></i> <span class="t" data-en="Prescriptions" data-bn="প্রিসক্রিপশন">Prescriptions</span></a></li>
+            <li><a class="nav-link" data-target="lab" data-role="admin,doctor,lab"><i class="fas fa-microscope"></i> <span class="t" data-en="Lab" data-bn="ল্যাব">Lab</span></a></li>
+            <li><a class="nav-link" data-target="ot" data-role="admin,doctor"><i class="fas fa-procedures"></i> <span class="t" data-en="OT" data-bn="অপারেশন">OT</span></a></li>
+            <li><a class="nav-link" data-target="blood" data-role="admin,lab"><i class="fas fa-tint"></i> <span class="t" data-en="Blood Bank" data-bn="ব্লাড ব্যাংক">Blood Bank</span></a></li>
         </ul>
 
-        <div class="menu-category">Facilities</div>
+        <div class="menu-category t" data-en="Facilities" data-bn="সুবিধা">Facilities</div>
         <ul class="nav-menu">
-            <li><a class="nav-link" data-target="wards" data-role="admin,receptionist"><i class="fas fa-bed"></i> <span>Ward & Beds</span></a></li>
-            <li><a class="nav-link" data-target="ambulance" data-role="admin,receptionist"><i class="fas fa-ambulance"></i> <span>Ambulance</span></a></li>
+            <li><a class="nav-link" data-target="wards" data-role="admin,receptionist"><i class="fas fa-bed"></i> <span class="t" data-en="Ward & Beds" data-bn="ওয়ার্ড ও বেড">Ward & Beds</span></a></li>
+            <li><a class="nav-link" data-target="ambulance" data-role="admin,receptionist"><i class="fas fa-ambulance"></i> <span class="t" data-en="Ambulance" data-bn="অ্যাম্বুলেন্স">Ambulance</span></a></li>
         </ul>
 
-        <div class="menu-category">Business</div>
+        <div class="menu-category t" data-en="Business" data-bn="ব্যবসা">Business</div>
         <ul class="nav-menu">
-            <li><a class="nav-link" data-target="pharmacy" data-role="admin,pharmacist"><i class="fas fa-pills"></i> <span>Pharmacy</span></a></li>
-            <li><a class="nav-link" data-target="billing" data-role="admin,receptionist"><i class="fas fa-file-invoice-dollar"></i> <span>Billing</span></a></li>
-            <li><a class="nav-link" data-target="expenses" data-role="admin"><i class="fas fa-money-bill-wave"></i> <span>Expenses</span></a></li>
+            <li><a class="nav-link" data-target="pharmacy" data-role="admin,pharmacist"><i class="fas fa-pills"></i> <span class="t" data-en="Pharmacy" data-bn="ফার্মেসি">Pharmacy</span></a></li>
+            <li><a class="nav-link" data-target="billing" data-role="admin,receptionist"><i class="fas fa-file-invoice-dollar"></i> <span class="t" data-en="Billing" data-bn="বিলিং">Billing</span></a></li>
+            <li><a class="nav-link" data-target="expenses" data-role="admin"><i class="fas fa-money-bill-wave"></i> <span class="t" data-en="Expenses" data-bn="খরচ">Expenses</span></a></li>
         </ul>
 
-        <div class="menu-category">Admin</div>
+        <div class="menu-category t" data-en="Admin" data-bn="অ্যাডমিন">Admin</div>
         <ul class="nav-menu">
-            <li><a class="nav-link" data-target="users" data-role="admin"><i class="fas fa-users-cog"></i> <span>Users</span></a></li>
-            <li><a class="nav-link" data-target="staff" data-role="admin"><i class="fas fa-users"></i> <span>Staff</span></a></li>
-            <li><a class="nav-link" data-target="reports" data-role="admin"><i class="fas fa-chart-line"></i> <span>Reports</span></a></li>
-            <li><a class="nav-link" data-target="recyclebin" data-role="admin"><i class="fas fa-recycle"></i> <span>Recycle Bin</span> <span class="nav-badge" id="recycleCount">0</span></a></li>
-            <li><a class="nav-link" data-target="settings" data-role="admin"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+            <li><a class="nav-link" data-target="users" data-role="admin"><i class="fas fa-users-cog"></i> <span class="t" data-en="Users" data-bn="ইউজার">Users</span></a></li>
+            <li><a class="nav-link" data-target="staff" data-role="admin"><i class="fas fa-users"></i> <span class="t" data-en="Staff" data-bn="কর্মচারী">Staff</span></a></li>
+            <li><a class="nav-link" data-target="reports" data-role="admin"><i class="fas fa-chart-line"></i> <span class="t" data-en="Reports" data-bn="রিপোর্ট">Reports</span></a></li>
+            <li><a class="nav-link" data-target="recyclebin" data-role="admin"><i class="fas fa-recycle"></i> <span class="t" data-en="Recycle Bin" data-bn="রিসাইকেল বিন">Recycle Bin</span> <span class="nav-badge" id="recycleCount">0</span></a></li>
+            <li><a class="nav-link" data-target="settings" data-role="admin"><i class="fas fa-cog"></i> <span class="t" data-en="Settings" data-bn="সেটিংস">Settings</span></a></li>
         </ul>
     </aside>
 
@@ -284,7 +258,7 @@ tr:hover td { background: var(--bg); }
         <div class="topbar">
             <div style="display:flex; align-items:center; gap:12px;">
                 <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
-                <h1>Hospital Management</h1>
+                <h1 class="t" data-en="Hospital Management" data-bn="হাসপাতাল ব্যবস্থাপনা">Hospital Management</h1>
             </div>
             <div class="topbar-right">
                 <button class="icon-btn" onclick="toggleTheme()" title="Theme"><i class="fas fa-moon" id="themeIcon"></i></button>
@@ -303,32 +277,32 @@ tr:hover td { background: var(--bg); }
         <!-- DASHBOARD -->
         <section id="dashboard" class="content-section active">
             <div class="stats-grid">
-                <div class="stat-card" onclick="navigateTo('patients')"><div class="stat-info"><h3>Total Patients</h3><h2 id="s-patients">0</h2></div><div class="stat-icon bg-blue"><i class="fas fa-user-injured"></i></div></div>
-                <div class="stat-card" onclick="navigateTo('doctors')"><div class="stat-info"><h3>Active Doctors</h3><h2 id="s-doctors">0</h2></div><div class="stat-icon bg-green"><i class="fas fa-user-md"></i></div></div>
-                <div class="stat-card" onclick="navigateTo('appointments')"><div class="stat-info"><h3>Appointments</h3><h2 id="s-apps">0</h2></div><div class="stat-icon bg-yellow"><i class="fas fa-calendar-check"></i></div></div>
-                <div class="stat-card" onclick="navigateTo('wards')"><div class="stat-info"><h3>Available Beds</h3><h2 id="s-beds">0</h2></div><div class="stat-icon bg-purple"><i class="fas fa-bed"></i></div></div>
-                <div class="stat-card" onclick="navigateTo('billing')"><div class="stat-info"><h3>Total Revenue</h3><h2 id="s-rev">৳ 0</h2></div><div class="stat-icon bg-green"><i class="fas fa-hand-holding-usd"></i></div></div>
-                <div class="stat-card" onclick="navigateTo('expenses')"><div class="stat-info"><h3>Total Expenses</h3><h2 id="s-exp">৳ 0</h2></div><div class="stat-icon bg-red"><i class="fas fa-money-bill-wave"></i></div></div>
+                <div class="stat-card" onclick="navigateTo('patients')"><div class="stat-info"><h3 class="t" data-en="Total Patients" data-bn="মোট রোগী">Total Patients</h3><h2 id="s-patients">0</h2></div><div class="stat-icon bg-blue"><i class="fas fa-user-injured"></i></div></div>
+                <div class="stat-card" onclick="navigateTo('doctors')"><div class="stat-info"><h3 class="t" data-en="Active Doctors" data-bn="সক্রিয় ডাক্তার">Active Doctors</h3><h2 id="s-doctors">0</h2></div><div class="stat-icon bg-green"><i class="fas fa-user-md"></i></div></div>
+                <div class="stat-card" onclick="navigateTo('appointments')"><div class="stat-info"><h3 class="t" data-en="Appointments" data-bn="অ্যাপয়েন্টমেন্ট">Appointments</h3><h2 id="s-apps">0</h2></div><div class="stat-icon bg-yellow"><i class="fas fa-calendar-check"></i></div></div>
+                <div class="stat-card" onclick="navigateTo('wards')"><div class="stat-info"><h3 class="t" data-en="Available Beds" data-bn="খালি বেড">Available Beds</h3><h2 id="s-beds">0</h2></div><div class="stat-icon bg-purple"><i class="fas fa-bed"></i></div></div>
+                <div class="stat-card" onclick="navigateTo('billing')"><div class="stat-info"><h3 class="t" data-en="Total Revenue" data-bn="মোট আয়">Total Revenue</h3><h2 id="s-rev">৳ 0</h2></div><div class="stat-icon bg-green"><i class="fas fa-hand-holding-usd"></i></div></div>
+                <div class="stat-card" onclick="navigateTo('expenses')"><div class="stat-info"><h3 class="t" data-en="Total Expenses" data-bn="মোট খরচ">Total Expenses</h3><h2 id="s-exp">৳ 0</h2></div><div class="stat-icon bg-red"><i class="fas fa-money-bill-wave"></i></div></div>
             </div>
 
             <div class="grid-2">
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-chart-bar"></i> Monthly Revenue</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-chart-bar"></i> <span class="t" data-en="Monthly Revenue" data-bn="মাসিক আয়">Monthly Revenue</span></h3></div>
                     <div class="chart-container"><canvas id="revenueChart"></canvas></div>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Department</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-chart-pie"></i> <span class="t" data-en="Department" data-bn="বিভাগ">Department</span></h3></div>
                     <div class="chart-container"><canvas id="deptChart"></canvas></div>
                 </div>
             </div>
 
             <div class="grid-2-equal">
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-history"></i> Recent Activity</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-history"></i> <span class="t" data-en="Recent Activity" data-bn="সাম্প্রতিক কার্যক্রম">Recent Activity</span></h3></div>
                     <ul class="activity-feed" id="activityFeed"></ul>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-exclamation-triangle"></i> Alerts</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-exclamation-triangle"></i> <span class="t" data-en="Alerts" data-bn="সতর্কতা">Alerts</span></h3></div>
                     <div id="alertsContainer"></div>
                 </div>
             </div>
@@ -337,131 +311,131 @@ tr:hover td { background: var(--bg); }
         <!-- PATIENTS -->
         <section id="patients" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-user-plus"></i> Register Patient</h3></div>
+                <div class="card-header"><h3><i class="fas fa-user-plus"></i> <span class="t" data-en="Register Patient" data-bn="রোগী নিবন্ধন">Register Patient</span></h3></div>
                 <form id="f-patient">
                     <div class="form-row">
-                        <div class="form-group"><label>Name</label><input type="text" id="p-name" required></div>
-                        <div class="form-group"><label>Age</label><input type="number" id="p-age" required></div>
-                        <div class="form-group"><label>Gender</label><select id="p-gender"><option>Male</option><option>Female</option><option>Other</option></select></div>
-                        <div class="form-group"><label>Phone</label><input type="text" id="p-phone" required></div>
-                        <div class="form-group"><label>Type</label><select id="p-type"><option value="OPD">OPD</option><option value="IPD">IPD</option></select></div>
-                        <div class="form-group"><label>Disease</label><input type="text" id="p-disease" required></div>
+                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="p-name" required class="t" data-ph-en="Patient name" data-ph-bn="রোগীর নাম" placeholder="রোগীর নাম"></div>
+                        <div class="form-group"><label class="t" data-en="Age" data-bn="বয়স">Age</label><input type="number" id="p-age" required></div>
+                        <div class="form-group"><label class="t" data-en="Gender" data-bn="লিঙ্গ">Gender</label><select id="p-gender"><option class="t" data-en="Male" data-bn="পুরুষ">Male</option><option class="t" data-en="Female" data-bn="মহিলা">Female</option><option class="t" data-en="Other" data-bn="অন্যান্য">Other</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" id="p-phone" required></div>
+                        <div class="form-group"><label class="t" data-en="Type" data-bn="ধরন">Type</label><select id="p-type"><option value="OPD">OPD</option><option value="IPD">IPD</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Disease" data-bn="রোগ">Disease</label><input type="text" id="p-disease" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Patient List</h3></div>
-                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-patients" placeholder="Search..." onkeyup="filterTable('patients')"></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Phone</th><th>Type</th><th>Disease</th><th>Action</th></tr></thead><tbody id="t-patients"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Patient List" data-bn="রোগীর তালিকা">Patient List</span></h3></div>
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-patients" class="t" data-ph-en="Search..." data-ph-bn="খুঁজুন..." placeholder="খুঁজুন..." onkeyup="filterTable('patients')"></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Name" data-bn="নাম">Name</th><th class="t" data-en="Age" data-bn="বয়স">Age</th><th class="t" data-en="Phone" data-bn="ফোন">Phone</th><th class="t" data-en="Type" data-bn="ধরন">Type</th><th class="t" data-en="Disease" data-bn="রোগ">Disease</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-patients"></tbody></table></div>
             </div>
         </section>
 
         <!-- DOCTORS -->
         <section id="doctors" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-user-md"></i> Add Doctor</h3></div>
+                <div class="card-header"><h3><i class="fas fa-user-md"></i> <span class="t" data-en="Add Doctor" data-bn="ডাক্তার যোগ">Add Doctor</span></h3></div>
                 <form id="f-doctor">
                     <div class="form-row">
-                        <div class="form-group"><label>Name</label><input type="text" id="d-name" required></div>
-                        <div class="form-group"><label>Specialization</label><select id="d-spec"></select></div>
-                        <div class="form-group"><label>Phone</label><input type="text" id="d-phone" required></div>
-                        <div class="form-group"><label>Fee (৳)</label><input type="number" id="d-fee" required></div>
-                        <div class="form-group"><label>Schedule</label><input type="text" id="d-schedule"></div>
-                        <div class="form-group"><label>Status</label><select id="d-status"><option>Active</option><option>On Leave</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="d-name" required></div>
+                        <div class="form-group"><label class="t" data-en="Specialization" data-bn="বিশেষত্ব">Specialization</label><select id="d-spec"></select></div>
+                        <div class="form-group"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" id="d-phone" required></div>
+                        <div class="form-group"><label class="t" data-en="Fee (৳)" data-bn="ফি (৳)">Fee (৳)</label><input type="number" id="d-fee" required></div>
+                        <div class="form-group"><label class="t" data-en="Schedule" data-bn="সময়সূচী">Schedule</label><input type="text" id="d-schedule"></div>
+                        <div class="form-group"><label class="t" data-en="Status" data-bn="অবস্থা">Status</label><select id="d-status"><option class="t" data-en="Active" data-bn="সক্রিয়">Active</option><option class="t" data-en="On Leave" data-bn="ছুটিতে">On Leave</option></select></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Doctors List</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Name</th><th>Specialization</th><th>Phone</th><th>Fee</th><th>Status</th><th>Action</th></tr></thead><tbody id="t-doctors"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Doctors List" data-bn="ডাক্তারের তালিকা">Doctors List</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Name" data-bn="নাম">Name</th><th class="t" data-en="Specialization" data-bn="বিশেষত্ব">Specialization</th><th class="t" data-en="Phone" data-bn="ফোন">Phone</th><th class="t" data-en="Fee" data-bn="ফি">Fee</th><th class="t" data-en="Status" data-bn="অবস্থা">Status</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-doctors"></tbody></table></div>
             </div>
         </section>
 
         <!-- APPOINTMENTS -->
         <section id="appointments" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-calendar-plus"></i> New Appointment</h3></div>
+                <div class="card-header"><h3><i class="fas fa-calendar-plus"></i> <span class="t" data-en="New Appointment" data-bn="নতুন অ্যাপয়েন্টমেন্ট">New Appointment</span></h3></div>
                 <form id="f-app">
                     <div class="form-row">
-                        <div class="form-group"><label>Patient</label><input type="text" id="a-name" list="patientList" required></div>
-                        <div class="form-group"><label>Doctor</label><select id="a-doc"></select></div>
-                        <div class="form-group"><label>Date</label><input type="date" id="a-date" required></div>
-                        <div class="form-group"><label>Time</label><input type="time" id="a-time" required></div>
-                        <div class="form-group"><label>Status</label><select id="a-status"><option>Scheduled</option><option>Confirmed</option><option>Completed</option><option>Cancelled</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Patient" data-bn="রোগী">Patient</label><input type="text" id="a-name" list="patientList" required></div>
+                        <div class="form-group"><label class="t" data-en="Doctor" data-bn="ডাক্তার">Doctor</label><select id="a-doc"></select></div>
+                        <div class="form-group"><label class="t" data-en="Date" data-bn="তারিখ">Date</label><input type="date" id="a-date" required></div>
+                        <div class="form-group"><label class="t" data-en="Time" data-bn="সময়">Time</label><input type="time" id="a-time" required></div>
+                        <div class="form-group"><label class="t" data-en="Status" data-bn="অবস্থা">Status</label><select id="a-status"><option class="t" data-en="Scheduled" data-bn="নির্ধারিত">Scheduled</option><option class="t" data-en="Confirmed" data-bn="নিশ্চিত">Confirmed</option><option class="t" data-en="Completed" data-bn="সম্পন্ন">Completed</option><option class="t" data-en="Cancelled" data-bn="বাতিল">Cancelled</option></select></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Appointments</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Date</th><th>Time</th><th>Status</th><th>Action</th></tr></thead><tbody id="t-apps"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Appointments" data-bn="অ্যাপয়েন্টমেন্ট">Appointments</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Patient" data-bn="রোগী">Patient</th><th class="t" data-en="Doctor" data-bn="ডাক্তার">Doctor</th><th class="t" data-en="Date" data-bn="তারিখ">Date</th><th class="t" data-en="Time" data-bn="সময়">Time</th><th class="t" data-en="Status" data-bn="অবস্থা">Status</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-apps"></tbody></table></div>
             </div>
         </section>
 
         <!-- PRESCRIPTIONS -->
         <section id="prescriptions" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-prescription"></i> Write Prescription</h3></div>
+                <div class="card-header"><h3><i class="fas fa-prescription"></i> <span class="t" data-en="Write Prescription" data-bn="প্রিসক্রিপশন লিখুন">Write Prescription</span></h3></div>
                 <form id="f-presc">
                     <div class="form-row">
-                        <div class="form-group"><label>Patient</label><input type="text" id="pr-name" list="patientList" required></div>
-                        <div class="form-group"><label>Doctor</label><select id="pr-doc"></select></div>
-                        <div class="form-group"><label>Diagnosis</label><input type="text" id="pr-diag" required></div>
+                        <div class="form-group"><label class="t" data-en="Patient" data-bn="রোগী">Patient</label><input type="text" id="pr-name" list="patientList" required></div>
+                        <div class="form-group"><label class="t" data-en="Doctor" data-bn="ডাক্তার">Doctor</label><select id="pr-doc"></select></div>
+                        <div class="form-group"><label class="t" data-en="Diagnosis" data-bn="রোগ নির্ণয়">Diagnosis</label><input type="text" id="pr-diag" required></div>
                     </div>
-                    <div class="form-group"><label>Medicines</label><textarea id="pr-meds"></textarea></div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <div class="form-group"><label class="t" data-en="Medicines" data-bn="ওষুধ">Medicines</label><textarea id="pr-meds"></textarea></div>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Prescriptions</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Patient</th><th>Doctor</th><th>Diagnosis</th><th>Date</th><th>Action</th></tr></thead><tbody id="t-presc"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Prescriptions" data-bn="প্রিসক্রিপশন">Prescriptions</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Patient" data-bn="রোগী">Patient</th><th class="t" data-en="Doctor" data-bn="ডাক্তার">Doctor</th><th class="t" data-en="Diagnosis" data-bn="রোগ">Diagnosis</th><th class="t" data-en="Date" data-bn="তারিখ">Date</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-presc"></tbody></table></div>
             </div>
         </section>
 
         <!-- LAB -->
         <section id="lab" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-microscope"></i> New Lab Test</h3></div>
+                <div class="card-header"><h3><i class="fas fa-microscope"></i> <span class="t" data-en="New Lab Test" data-bn="নতুন ল্যাব টেস্ট">New Lab Test</span></h3></div>
                 <form id="f-lab">
                     <div class="form-row">
-                        <div class="form-group"><label>Patient</label><input type="text" id="l-name" list="patientList" required></div>
-                        <div class="form-group"><label>Test</label><select id="l-test"></select></div>
-                        <div class="form-group"><label>Fee (৳)</label><input type="number" id="l-fee" required></div>
-                        <div class="form-group"><label>Status</label><select id="l-status"><option>Pending</option><option>In Progress</option><option>Completed</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Patient" data-bn="রোগী">Patient</label><input type="text" id="l-name" list="patientList" required></div>
+                        <div class="form-group"><label class="t" data-en="Test" data-bn="টেস্ট">Test</label><select id="l-test"></select></div>
+                        <div class="form-group"><label class="t" data-en="Fee (৳)" data-bn="ফি (৳)">Fee (৳)</label><input type="number" id="l-fee" required></div>
+                        <div class="form-group"><label class="t" data-en="Status" data-bn="অবস্থা">Status</label><select id="l-status"><option class="t" data-en="Pending" data-bn="অপেক্ষমান">Pending</option><option class="t" data-en="In Progress" data-bn="চলমান">In Progress</option><option class="t" data-en="Completed" data-bn="সম্পন্ন">Completed</option></select></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Lab Tests</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Patient</th><th>Test</th><th>Fee</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="t-lab"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Lab Tests" data-bn="ল্যাব টেস্ট">Lab Tests</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Patient" data-bn="রোগী">Patient</th><th class="t" data-en="Test" data-bn="টেস্ট">Test</th><th class="t" data-en="Fee" data-bn="ফি">Fee</th><th class="t" data-en="Status" data-bn="অবস্থা">Status</th><th class="t" data-en="Date" data-bn="তারিখ">Date</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-lab"></tbody></table></div>
             </div>
         </section>
 
         <!-- OT -->
         <section id="ot" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-procedures"></i> Schedule Surgery</h3></div>
+                <div class="card-header"><h3><i class="fas fa-procedures"></i> <span class="t" data-en="Schedule Surgery" data-bn="সার্জারি নির্ধারণ">Schedule Surgery</span></h3></div>
                 <form id="f-ot">
                     <div class="form-row">
-                        <div class="form-group"><label>Patient</label><input type="text" id="ot-name" list="patientList" required></div>
-                        <div class="form-group"><label>Surgeon</label><select id="ot-surgeon"></select></div>
-                        <div class="form-group"><label>Type</label><input type="text" id="ot-type" required></div>
-                        <div class="form-group"><label>Date</label><input type="date" id="ot-date" required></div>
-                        <div class="form-group"><label>Time</label><input type="time" id="ot-time" required></div>
+                        <div class="form-group"><label class="t" data-en="Patient" data-bn="রোগী">Patient</label><input type="text" id="ot-name" list="patientList" required></div>
+                        <div class="form-group"><label class="t" data-en="Surgeon" data-bn="সার্জন">Surgeon</label><select id="ot-surgeon"></select></div>
+                        <div class="form-group"><label class="t" data-en="Type" data-bn="ধরন">Type</label><input type="text" id="ot-type" required></div>
+                        <div class="form-group"><label class="t" data-en="Date" data-bn="তারিখ">Date</label><input type="date" id="ot-date" required></div>
+                        <div class="form-group"><label class="t" data-en="Time" data-bn="সময়">Time</label><input type="time" id="ot-time" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Surgery Schedule</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Patient</th><th>Surgeon</th><th>Type</th><th>Date/Time</th><th>Action</th></tr></thead><tbody id="t-ot"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Surgery Schedule" data-bn="সার্জারি সময়সূচী">Surgery Schedule</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Patient" data-bn="রোগী">Patient</th><th class="t" data-en="Surgeon" data-bn="সার্জন">Surgeon</th><th class="t" data-en="Type" data-bn="ধরন">Type</th><th class="t" data-en="Date/Time" data-bn="তারিখ/সময়">Date/Time</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-ot"></tbody></table></div>
             </div>
         </section>
 
-        <!-- BLOOD BANK - All 8 groups -->
+        <!-- BLOOD BANK -->
         <section id="blood" class="content-section">
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-info"><h3>A+</h3><h2 id="bb-ap">0</h2></div><div class="stat-icon bg-red"><i class="fas fa-tint"></i></div></div>
@@ -474,45 +448,36 @@ tr:hover td { background: var(--bg); }
                 <div class="stat-card"><div class="stat-info"><h3>AB-</h3><h2 id="bb-abn">0</h2></div><div class="stat-icon bg-red"><i class="fas fa-tint"></i></div></div>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-plus"></i> Add Blood Record</h3></div>
+                <div class="card-header"><h3><i class="fas fa-plus"></i> <span class="t" data-en="Add Blood Record" data-bn="রক্তের রেকর্ড যোগ">Add Blood Record</span></h3></div>
                 <form id="f-blood">
                     <div class="form-row">
-                        <div class="form-group"><label>Name</label><input type="text" id="bl-name" required></div>
-                        <div class="form-group"><label>Group</label><select id="bl-group"><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select></div>
-                        <div class="form-group"><label>Type</label><select id="bl-type"><option>Donation</option><option>Received</option><option>Issued</option></select></div>
-                        <div class="form-group"><label>Units</label><input type="number" id="bl-units" required></div>
+                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="bl-name" required></div>
+                        <div class="form-group"><label class="t" data-en="Group" data-bn="গ্রুপ">Group</label><select id="bl-group"><option>A+</option><option>B+</option><option>O+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Type" data-bn="ধরন">Type</label><select id="bl-type"><option class="t" data-en="Donation" data-bn="দান">Donation</option><option class="t" data-en="Received" data-bn="গৃহীত">Received</option><option class="t" data-en="Issued" data-bn="প্রদত্ত">Issued</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Units" data-bn="ইউনিট">Units</label><input type="number" id="bl-units" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Blood Records</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Name</th><th>Group</th><th>Type</th><th>Units</th><th>Date</th><th>Action</th></tr></thead><tbody id="t-blood"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Blood Records" data-bn="রক্তের রেকর্ড">Blood Records</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Name" data-bn="নাম">Name</th><th class="t" data-en="Group" data-bn="গ্রুপ">Group</th><th class="t" data-en="Type" data-bn="ধরন">Type</th><th class="t" data-en="Units" data-bn="ইউনিট">Units</th><th class="t" data-en="Date" data-bn="তারিখ">Date</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-blood"></tbody></table></div>
             </div>
         </section>
 
-        <!-- WARDS & BEDS - FIXED -->
+        <!-- WARDS -->
         <section id="wards" class="content-section">
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fas fa-bed"></i> Ward Management</h3>
-                    <button class="btn btn-primary btn-sm" onclick="showAddBedModal()"><i class="fas fa-plus"></i> Add Bed</button>
+                    <h3><i class="fas fa-bed"></i> <span class="t" data-en="Ward Management" data-bn="ওয়ার্ড ব্যবস্থাপনা">Ward Management</span></h3>
+                    <button class="btn btn-primary btn-sm" onclick="showAddBedModal()"><i class="fas fa-plus"></i> <span class="t" data-en="Add Bed" data-bn="বেড যোগ">Add Bed</span></button>
                 </div>
                 <div class="ward-tabs" id="wardTabs"></div>
                 <div id="wardContent"></div>
-                <div class="bed-legend">
-                    <div class="legend-item"><div class="legend-color" style="background: var(--success-light);"></div> Available</div>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--danger-light);"></div> Occupied</div>
-                    <div class="legend-item"><div class="legend-color" style="background: var(--warning-light);"></div> Maintenance</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Bed Statistics</h3></div>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-info"><h3>Total Beds</h3><h2 id="bed-total">0</h2></div><div class="stat-icon bg-blue"><i class="fas fa-bed"></i></div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>Available</h3><h2 id="bed-available">0</h2></div><div class="stat-icon bg-green"><i class="fas fa-check"></i></div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>Occupied</h3><h2 id="bed-occupied">0</h2></div><div class="stat-icon bg-red"><i class="fas fa-user"></i></div></div>
-                    <div class="stat-card"><div class="stat-info"><h3>Maintenance</h3><h2 id="bed-maintenance">0</h2></div><div class="stat-icon bg-yellow"><i class="fas fa-wrench"></i></div></div>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px; padding: 16px; background: var(--bg); border-radius: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 20px; height: 20px; border-radius: 6px; background: var(--success-light);"></div><span class="t" data-en="Available" data-bn="খালি">Available</span></div>
+                    <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 20px; height: 20px; border-radius: 6px; background: var(--danger-light);"></div><span class="t" data-en="Occupied" data-bn="দখলকৃত">Occupied</span></div>
+                    <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 20px; height: 20px; border-radius: 6px; background: var(--warning-light);"></div><span class="t" data-en="Maintenance" data-bn="রক্ষণাবেক্ষণ">Maintenance</span></div>
                 </div>
             </div>
         </section>
@@ -520,163 +485,163 @@ tr:hover td { background: var(--bg); }
         <!-- AMBULANCE -->
         <section id="ambulance" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-ambulance"></i> Dispatch Ambulance</h3></div>
+                <div class="card-header"><h3><i class="fas fa-ambulance"></i> <span class="t" data-en="Dispatch Ambulance" data-bn="অ্যাম্বুলেন্স পাঠান">Dispatch Ambulance</span></h3></div>
                 <form id="f-amb">
                     <div class="form-row">
-                        <div class="form-group"><label>Patient</label><input type="text" id="am-name" list="patientList" required></div>
-                        <div class="form-group"><label>Ambulance No</label><select id="am-no"><option>AMB-001</option><option>AMB-002</option><option>AMB-003</option></select></div>
-                        <div class="form-group"><label>Driver</label><input type="text" id="am-driver" required></div>
-                        <div class="form-group"><label>From</label><input type="text" id="am-from" required></div>
-                        <div class="form-group"><label>To</label><input type="text" id="am-to" required></div>
-                        <div class="form-group"><label>Type</label><select id="am-type"><option>Emergency</option><option>Non-Emergency</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Patient" data-bn="রোগী">Patient</label><input type="text" id="am-name" list="patientList" required></div>
+                        <div class="form-group"><label class="t" data-en="Ambulance No" data-bn="অ্যাম্বুলেন্স নং">Ambulance No</label><select id="am-no"><option>AMB-001</option><option>AMB-002</option><option>AMB-003</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Driver" data-bn="ড্রাইভার">Driver</label><input type="text" id="am-driver" required></div>
+                        <div class="form-group"><label class="t" data-en="From" data-bn="হতে">From</label><input type="text" id="am-from" required></div>
+                        <div class="form-group"><label class="t" data-en="To" data-bn="পর্যন্ত">To</label><input type="text" id="am-to" required></div>
+                        <div class="form-group"><label class="t" data-en="Type" data-bn="ধরন">Type</label><select id="am-type"><option class="t" data-en="Emergency" data-bn="জরুরি">Emergency</option><option class="t" data-en="Non-Emergency" data-bn="অ-জরুরি">Non-Emergency</option></select></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Records</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Patient</th><th>Ambulance</th><th>Driver</th><th>Route</th><th>Action</th></tr></thead><tbody id="t-amb"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Records" data-bn="রেকর্ড">Records</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Patient" data-bn="রোগী">Patient</th><th class="t" data-en="Ambulance" data-bn="অ্যাম্বুলেন্স">Ambulance</th><th class="t" data-en="Driver" data-bn="ড্রাইভার">Driver</th><th class="t" data-en="Route" data-bn="রুট">Route</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-amb"></tbody></table></div>
             </div>
         </section>
 
         <!-- PHARMACY -->
         <section id="pharmacy" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-pills"></i> Add Medicine</h3></div>
+                <div class="card-header"><h3><i class="fas fa-pills"></i> <span class="t" data-en="Add Medicine" data-bn="ওষুধ যোগ">Add Medicine</span></h3></div>
                 <form id="f-med">
                     <div class="form-row">
-                        <div class="form-group"><label>Name</label><input type="text" id="m-name" required></div>
-                        <div class="form-group"><label>Category</label><select id="m-cat"></select></div>
-                        <div class="form-group"><label>Stock</label><input type="number" id="m-stock" required></div>
-                        <div class="form-group"><label>Price (৳)</label><input type="number" id="m-price" required></div>
-                        <div class="form-group"><label>Expiry</label><input type="date" id="m-expiry"></div>
+                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="m-name" required></div>
+                        <div class="form-group"><label class="t" data-en="Category" data-bn="ক্যাটাগরি">Category</label><select id="m-cat"></select></div>
+                        <div class="form-group"><label class="t" data-en="Stock" data-bn="স্টক">Stock</label><input type="number" id="m-stock" required></div>
+                        <div class="form-group"><label class="t" data-en="Price (৳)" data-bn="দাম (৳)">Price (৳)</label><input type="number" id="m-price" required></div>
+                        <div class="form-group"><label class="t" data-en="Expiry" data-bn="মেয়াদ">Expiry</label><input type="date" id="m-expiry"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Inventory</h3></div>
-                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-meds" placeholder="Search..." onkeyup="filterTable('meds')"></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Stock</th><th>Price</th><th>Expiry</th><th>Action</th></tr></thead><tbody id="t-meds"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Inventory" data-bn="ইনভেন্টরি">Inventory</span></h3></div>
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-meds" class="t" data-ph-en="Search..." data-ph-bn="খুঁজুন..." placeholder="খুঁজুন..." onkeyup="filterTable('meds')"></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Name" data-bn="নাম">Name</th><th class="t" data-en="Category" data-bn="ক্যাটাগরি">Category</th><th class="t" data-en="Stock" data-bn="স্টক">Stock</th><th class="t" data-en="Price" data-bn="দাম">Price</th><th class="t" data-en="Expiry" data-bn="মেয়াদ">Expiry</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-meds"></tbody></table></div>
             </div>
         </section>
 
         <!-- BILLING -->
         <section id="billing" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-receipt"></i> Generate Bill</h3></div>
+                <div class="card-header"><h3><i class="fas fa-receipt"></i> <span class="t" data-en="Generate Bill" data-bn="বিল তৈরি">Generate Bill</span></h3></div>
                 <form id="f-bill">
                     <div class="form-row">
-                        <div class="form-group"><label>Patient</label><input type="text" id="b-name" list="patientList" required></div>
-                        <div class="form-group"><label>Item</label><input type="text" id="b-item" required></div>
-                        <div class="form-group"><label>Category</label><select id="b-cat"></select></div>
-                        <div class="form-group"><label>Amount (৳)</label><input type="number" id="b-amount" required oninput="calculateBill()"></div>
-                        <div class="form-group"><label>Discount %</label><input type="number" id="b-discount" value="0" oninput="calculateBill()"></div>
-                        <div class="form-group"><label>VAT %</label><input type="number" id="b-vat" value="0" oninput="calculateBill()"></div>
-                        <div class="form-group"><label>Total</label><input type="text" id="b-total" readonly style="background:var(--success-light); font-weight:700;"></div>
-                        <div class="form-group"><label>Payment</label><select id="b-pay"><option>Paid</option><option>Pending</option><option>Partial</option></select></div>
+                        <div class="form-group"><label class="t" data-en="Patient" data-bn="রোগী">Patient</label><input type="text" id="b-name" list="patientList" required></div>
+                        <div class="form-group"><label class="t" data-en="Item" data-bn="আইটেম">Item</label><input type="text" id="b-item" required></div>
+                        <div class="form-group"><label class="t" data-en="Category" data-bn="ক্যাটাগরি">Category</label><select id="b-cat"></select></div>
+                        <div class="form-group"><label class="t" data-en="Amount (৳)" data-bn="পরিমাণ (৳)">Amount (৳)</label><input type="number" id="b-amount" required oninput="calculateBill()"></div>
+                        <div class="form-group"><label class="t" data-en="Discount %" data-bn="ডিসকাউন্ট %">Discount %</label><input type="number" id="b-discount" value="0" oninput="calculateBill()"></div>
+                        <div class="form-group"><label class="t" data-en="VAT %" data-bn="ভ্যাট %">VAT %</label><input type="number" id="b-vat" value="0" oninput="calculateBill()"></div>
+                        <div class="form-group"><label class="t" data-en="Total" data-bn="মোট">Total</label><input type="text" id="b-total" readonly style="background:var(--success-light); font-weight:700;"></div>
+                        <div class="form-group"><label class="t" data-en="Payment" data-bn="পেমেন্ট">Payment</label><select id="b-pay"><option class="t" data-en="Paid" data-bn="পরিশোধিত">Paid</option><option class="t" data-en="Pending" data-bn="অপেক্ষমান">Pending</option><option class="t" data-en="Partial" data-bn="আংশিক">Partial</option></select></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-invoice"></i> Generate</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-file-invoice"></i> <span class="t" data-en="Generate" data-bn="তৈরি">Generate</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-history"></i> Bill History</h3></div>
-                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-bills" placeholder="Search..." onkeyup="filterTable('bills')"></div>
-                <div class="table-container"><table><thead><tr><th>Invoice</th><th>Patient</th><th>Item</th><th>Amount</th><th>Payment</th><th>Date</th><th>Action</th></tr></thead><tbody id="t-bills"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-history"></i> <span class="t" data-en="Bill History" data-bn="বিলের ইতিহাস">Bill History</span></h3></div>
+                <div class="search-box"><i class="fas fa-search"></i><input type="text" id="search-bills" class="t" data-ph-en="Search..." data-ph-bn="খুঁজুন..." placeholder="খুঁজুন..." onkeyup="filterTable('bills')"></div>
+                <div class="table-container"><table><thead><tr><th class="t" data-en="Invoice" data-bn="ইনভয়েস">Invoice</th><th class="t" data-en="Patient" data-bn="রোগী">Patient</th><th class="t" data-en="Item" data-bn="আইটেম">Item</th><th class="t" data-en="Amount" data-bn="পরিমাণ">Amount</th><th class="t" data-en="Payment" data-bn="পেমেন্ট">Payment</th><th class="t" data-en="Date" data-bn="তারিখ">Date</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-bills"></tbody></table></div>
             </div>
         </section>
 
         <!-- EXPENSES -->
         <section id="expenses" class="content-section">
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-info"><h3>Total Expenses</h3><h2 id="e-total">৳ 0</h2></div><div class="stat-icon bg-red"><i class="fas fa-money-bill-wave"></i></div></div>
-                <div class="stat-card"><div class="stat-info"><h3>This Month</h3><h2 id="e-month">৳ 0</h2></div><div class="stat-icon bg-yellow"><i class="fas fa-calendar"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 class="t" data-en="Total Expenses" data-bn="মোট খরচ">Total Expenses</h3><h2 id="e-total">৳ 0</h2></div><div class="stat-icon bg-red"><i class="fas fa-money-bill-wave"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 class="t" data-en="This Month" data-bn="এই মাস">This Month</h3><h2 id="e-month">৳ 0</h2></div><div class="stat-icon bg-yellow"><i class="fas fa-calendar"></i></div></div>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-plus-circle"></i> Add Expense</h3></div>
+                <div class="card-header"><h3><i class="fas fa-plus-circle"></i> <span class="t" data-en="Add Expense" data-bn="খরচ যোগ">Add Expense</span></h3></div>
                 <form id="f-expense">
                     <div class="form-row">
-                        <div class="form-group"><label>Category</label><select id="ex-cat"></select></div>
-                        <div class="form-group"><label>Description</label><input type="text" id="ex-desc" required></div>
-                        <div class="form-group"><label>Amount (৳)</label><input type="number" id="ex-amount" required></div>
-                        <div class="form-group"><label>Date</label><input type="date" id="ex-date" required></div>
-                        <div class="form-group"><label>Paid By</label><input type="text" id="ex-paidby" required></div>
+                        <div class="form-group"><label class="t" data-en="Category" data-bn="ক্যাটাগরি">Category</label><select id="ex-cat"></select></div>
+                        <div class="form-group"><label class="t" data-en="Description" data-bn="বিবরণ">Description</label><input type="text" id="ex-desc" required></div>
+                        <div class="form-group"><label class="t" data-en="Amount (৳)" data-bn="পরিমাণ (৳)">Amount (৳)</label><input type="number" id="ex-amount" required></div>
+                        <div class="form-group"><label class="t" data-en="Date" data-bn="তারিখ">Date</label><input type="date" id="ex-date" required></div>
+                        <div class="form-group"><label class="t" data-en="Paid By" data-bn="পরিশোধকারী">Paid By</label><input type="text" id="ex-paidby" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Expense Records</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Category</th><th>Description</th><th>Amount</th><th>Paid By</th><th>Date</th><th>Action</th></tr></thead><tbody id="t-expenses"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Expense Records" data-bn="খরচের রেকর্ড">Expense Records</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Category" data-bn="ক্যাটাগরি">Category</th><th class="t" data-en="Description" data-bn="বিবরণ">Description</th><th class="t" data-en="Amount" data-bn="পরিমাণ">Amount</th><th class="t" data-en="Paid By" data-bn="পরিশোধকারী">Paid By</th><th class="t" data-en="Date" data-bn="তারিখ">Date</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-expenses"></tbody></table></div>
             </div>
         </section>
 
-        <!-- USERS MANAGEMENT -->
+        <!-- USERS -->
         <section id="users" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-user-plus"></i> Add New User</h3></div>
+                <div class="card-header"><h3><i class="fas fa-user-plus"></i> <span class="t" data-en="Add New User" data-bn="নতুন ইউজার যোগ">Add New User</span></h3></div>
                 <form id="f-user">
                     <div class="form-row">
-                        <div class="form-group"><label>Full Name</label><input type="text" id="u-name" required></div>
-                        <div class="form-group"><label>Username</label><input type="text" id="u-username" required></div>
-                        <div class="form-group"><label>Password</label><input type="password" id="u-password" required></div>
-                        <div class="form-group"><label>Role</label>
+                        <div class="form-group"><label class="t" data-en="Full Name" data-bn="পূর্ণ নাম">Full Name</label><input type="text" id="u-name" required></div>
+                        <div class="form-group"><label class="t" data-en="Username" data-bn="ব্যবহারকারীর নাম">Username</label><input type="text" id="u-username" required></div>
+                        <div class="form-group"><label class="t" data-en="Password" data-bn="পাসওয়ার্ড">Password</label><input type="password" id="u-password" required></div>
+                        <div class="form-group"><label class="t" data-en="Role" data-bn="ভূমিকা">Role</label>
                             <select id="u-role">
-                                <option value="admin">Admin</option>
-                                <option value="doctor">Doctor</option>
-                                <option value="receptionist">Receptionist</option>
-                                <option value="pharmacist">Pharmacist</option>
-                                <option value="lab">Lab Technician</option>
+                                <option value="admin" class="t" data-en="Admin" data-bn="অ্যাডমিন">Admin</option>
+                                <option value="doctor" class="t" data-en="Doctor" data-bn="ডাক্তার">Doctor</option>
+                                <option value="receptionist" class="t" data-en="Receptionist" data-bn="রিসেপশনিস্ট">Receptionist</option>
+                                <option value="pharmacist" class="t" data-en="Pharmacist" data-bn="ফার্মাসিস্ট">Pharmacist</option>
+                                <option value="lab" class="t" data-en="Lab Technician" data-bn="ল্যাব টেকনিশিয়ান">Lab Technician</option>
                             </select>
                         </div>
-                        <div class="form-group"><label>Email</label><input type="email" id="u-email" required></div>
-                        <div class="form-group"><label>Phone</label><input type="text" id="u-phone" required></div>
+                        <div class="form-group"><label class="t" data-en="Email" data-bn="ইমেইল">Email</label><input type="email" id="u-email" required></div>
+                        <div class="form-group"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" id="u-phone" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Create User</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Create User" data-bn="ইউজার তৈরি">Create User</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-users"></i> User List</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Name</th><th>Username</th><th>Role</th><th>Email</th><th>Phone</th><th>Status</th><th>Action</th></tr></thead><tbody id="t-users"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-users"></i> <span class="t" data-en="User List" data-bn="ইউজার তালিকা">User List</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Name" data-bn="নাম">Name</th><th class="t" data-en="Username" data-bn="ইউজারনেম">Username</th><th class="t" data-en="Role" data-bn="ভূমিকা">Role</th><th class="t" data-en="Email" data-bn="ইমেইল">Email</th><th class="t" data-en="Phone" data-bn="ফোন">Phone</th><th class="t" data-en="Status" data-bn="অবস্থা">Status</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-users"></tbody></table></div>
             </div>
         </section>
 
         <!-- STAFF -->
         <section id="staff" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-users"></i> Add Staff</h3></div>
+                <div class="card-header"><h3><i class="fas fa-users"></i> <span class="t" data-en="Add Staff" data-bn="কর্মচারী যোগ">Add Staff</span></h3></div>
                 <form id="f-staff">
                     <div class="form-row">
-                        <div class="form-group"><label>Name</label><input type="text" id="st-name" required></div>
-                        <div class="form-group"><label>Designation</label><select id="st-desig"></select></div>
-                        <div class="form-group"><label>Department</label><select id="st-dept"></select></div>
-                        <div class="form-group"><label>Phone</label><input type="text" id="st-phone" required></div>
-                        <div class="form-group"><label>Salary (৳)</label><input type="number" id="st-salary" required></div>
-                        <div class="form-group"><label>Join Date</label><input type="date" id="st-join" required></div>
+                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="st-name" required></div>
+                        <div class="form-group"><label class="t" data-en="Designation" data-bn="পদবি">Designation</label><select id="st-desig"></select></div>
+                        <div class="form-group"><label class="t" data-en="Department" data-bn="বিভাগ">Department</label><select id="st-dept"></select></div>
+                        <div class="form-group"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" id="st-phone" required></div>
+                        <div class="form-group"><label class="t" data-en="Salary (৳)" data-bn="বেতন (৳)">Salary (৳)</label><input type="number" id="st-salary" required></div>
+                        <div class="form-group"><label class="t" data-en="Join Date" data-bn="যোগদান">Join Date</label><input type="date" id="st-join" required></div>
                     </div>
-                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> <span class="t" data-en="Save" data-bn="সেভ">Save</span></button>
                 </form>
             </div>
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-list"></i> Staff List</h3></div>
-                <div class="table-container"><table><thead><tr><th>ID</th><th>Name</th><th>Designation</th><th>Dept</th><th>Phone</th><th>Salary</th><th>Action</th></tr></thead><tbody id="t-staff"></tbody></table></div>
+                <div class="card-header"><h3><i class="fas fa-list"></i> <span class="t" data-en="Staff List" data-bn="কর্মচারী তালিকা">Staff List</span></h3></div>
+                <div class="table-container"><table><thead><tr><th>ID</th><th class="t" data-en="Name" data-bn="নাম">Name</th><th class="t" data-en="Designation" data-bn="পদবি">Designation</th><th class="t" data-en="Dept" data-bn="বিভাগ">Dept</th><th class="t" data-en="Phone" data-bn="ফোন">Phone</th><th class="t" data-en="Salary" data-bn="বেতন">Salary</th><th class="t" data-en="Action" data-bn="অ্যাকশন">Action</th></tr></thead><tbody id="t-staff"></tbody></table></div>
             </div>
         </section>
 
         <!-- REPORTS -->
         <section id="reports" class="content-section">
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-info"><h3>Total Revenue</h3><h2 id="r-rev">৳ 0</h2></div><div class="stat-icon bg-green"><i class="fas fa-money-bill-wave"></i></div></div>
-                <div class="stat-card"><div class="stat-info"><h3>Total Expenses</h3><h2 id="r-exp">৳ 0</h2></div><div class="stat-icon bg-red"><i class="fas fa-file-invoice"></i></div></div>
-                <div class="stat-card"><div class="stat-info"><h3>Net Profit</h3><h2 id="r-profit">৳ 0</h2></div><div class="stat-icon bg-blue"><i class="fas fa-chart-line"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 class="t" data-en="Total Revenue" data-bn="মোট আয়">Total Revenue</h3><h2 id="r-rev">৳ 0</h2></div><div class="stat-icon bg-green"><i class="fas fa-money-bill-wave"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 class="t" data-en="Total Expenses" data-bn="মোট খরচ">Total Expenses</h3><h2 id="r-exp">৳ 0</h2></div><div class="stat-icon bg-red"><i class="fas fa-file-invoice"></i></div></div>
+                <div class="stat-card"><div class="stat-info"><h3 class="t" data-en="Net Profit" data-bn="নিট লাভ">Net Profit</h3><h2 id="r-profit">৳ 0</h2></div><div class="stat-icon bg-blue"><i class="fas fa-chart-line"></i></div></div>
             </div>
             <div class="grid-2">
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-chart-area"></i> Revenue vs Expenses</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-chart-area"></i> <span class="t" data-en="Revenue vs Expenses" data-bn="আয় বনাম ব্যয়">Revenue vs Expenses</span></h3></div>
                     <div class="chart-container"><canvas id="profitChart"></canvas></div>
                 </div>
                 <div class="card">
-                    <div class="card-header"><h3><i class="fas fa-chart-bar"></i> Expense Categories</h3></div>
+                    <div class="card-header"><h3><i class="fas fa-chart-bar"></i> <span class="t" data-en="Expense Categories" data-bn="খরচের ক্যাটাগরি">Expense Categories</span></h3></div>
                     <div class="chart-container"><canvas id="expenseChart"></canvas></div>
                 </div>
             </div>
@@ -686,8 +651,8 @@ tr:hover td { background: var(--bg); }
         <section id="recyclebin" class="content-section">
             <div class="card">
                 <div class="card-header">
-                    <h3><i class="fas fa-recycle"></i> Recycle Bin</h3>
-                    <button class="btn btn-danger" onclick="emptyRecycleBin()"><i class="fas fa-trash"></i> Empty Bin</button>
+                    <h3><i class="fas fa-recycle"></i> <span class="t" data-en="Recycle Bin" data-bn="রিসাইকেল বিন">Recycle Bin</span></h3>
+                    <button class="btn btn-danger" onclick="emptyRecycleBin()"><i class="fas fa-trash"></i> <span class="t" data-en="Empty Bin" data-bn="বিন খালি">Empty Bin</span></button>
                 </div>
                 <div id="recycleBinList"></div>
             </div>
@@ -696,11 +661,11 @@ tr:hover td { background: var(--bg); }
         <!-- SETTINGS -->
         <section id="settings" class="content-section">
             <div class="card">
-                <div class="card-header"><h3><i class="fas fa-cog"></i> Settings</h3></div>
-                <div class="form-group"><label>Hospital Name</label><input type="text" value="MediCare Hospital"></div>
-                <div class="form-group" style="margin-top:12px;"><label>Address</label><textarea>123 Medical Road, Dhaka</textarea></div>
-                <div class="form-group" style="margin-top:12px;"><label>Phone</label><input type="text" value="+880-1700-000000"></div>
-                <button class="btn btn-primary" style="margin-top:16px;"><i class="fas fa-save"></i> Save Settings</button>
+                <div class="card-header"><h3><i class="fas fa-cog"></i> <span class="t" data-en="Settings" data-bn="সেটিংস">Settings</span></h3></div>
+                <div class="form-group"><label class="t" data-en="Hospital Name" data-bn="হাসপাতালের নাম">Hospital Name</label><input type="text" value="MediCare Hospital"></div>
+                <div class="form-group" style="margin-top:12px;"><label class="t" data-en="Address" data-bn="ঠিকানা">Address</label><textarea>123 Medical Road, Dhaka</textarea></div>
+                <div class="form-group" style="margin-top:12px;"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" value="+880-1700-000000"></div>
+                <button class="btn btn-primary" style="margin-top:16px;"><i class="fas fa-save"></i> <span class="t" data-en="Save Settings" data-bn="সেটিংস সেভ">Save Settings</span></button>
             </div>
         </section>
     </div>
@@ -717,33 +682,11 @@ tr:hover td { background: var(--bg); }
     </div>
 </div>
 
-<div class="modal-overlay" id="patientHistoryModal">
-    <div class="modal" style="width: 700px;">
-        <div class="modal-header">
-            <h3>Patient History</h3>
-            <button class="modal-close" onclick="closeModal('patientHistoryModal')">&times;</button>
-        </div>
-        <div id="patientHistoryContent"></div>
-    </div>
-</div>
-
-<div class="modal-overlay" id="invoiceModal">
-    <div class="modal" style="width: 600px;">
-        <div class="modal-header">
-            <h3>Invoice</h3>
-            <button class="modal-close" onclick="closeModal('invoiceModal')">&times;</button>
-        </div>
-        <div id="invoiceContent"></div>
-        <div style="margin-top: 20px; text-align: right;">
-            <button class="btn btn-primary" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
-        </div>
-    </div>
-</div>
-
 <datalist id="patientList"></datalist>
 
 <script>
 let currentUser = null;
+let lang = localStorage.getItem('lang') || 'bn';
 let charts = {};
 
 const defaultCategories = {
@@ -756,14 +699,32 @@ const defaultCategories = {
     departments: ['Emergency', 'OPD', 'IPD', 'Pharmacy', 'Lab', 'Admin']
 };
 
-// Default wards
 const defaultWards = {
     'ICU': Array.from({length: 10}, (_, i) => ({ id: 'ICU-' + (i+1), status: i < 3 ? 'occupied' : 'available', patient: i < 3 ? 'Patient ' + (i+1) : null })),
     'General': Array.from({length: 20}, (_, i) => ({ id: 'G-' + (i+1), status: i % 3 === 0 ? 'occupied' : 'available', patient: i % 3 === 0 ? 'Patient ' + i : null })),
     'Cabin': Array.from({length: 8}, (_, i) => ({ id: 'C-' + (i+1), status: i < 2 ? 'occupied' : 'available', patient: i < 2 ? 'Patient ' + (i+1) : null }))
 };
 
-// Initialize default data
+// Translation function
+function applyLanguage() {
+    document.querySelectorAll('.t').forEach(el => {
+        const text = el.getAttribute('data-' + lang);
+        if(text) el.textContent = text;
+        const ph = el.getAttribute('data-ph-' + lang);
+        if(ph) el.placeholder = ph;
+    });
+    document.getElementById('loginLangText').textContent = lang === 'en' ? 'বাংলা' : 'English';
+    document.documentElement.lang = lang;
+    // Re-render dynamic content
+    if(currentUser) renderAll();
+}
+
+function toggleLang() {
+    lang = lang === 'en' ? 'bn' : 'en';
+    localStorage.setItem('lang', lang);
+    applyLanguage();
+}
+
 function initDefaultData() {
     if(!localStorage.getItem('users')) {
         const defaultUsers = [
@@ -771,13 +732,11 @@ function initDefaultData() {
         ];
         localStorage.setItem('users', JSON.stringify(defaultUsers));
     }
-    
     Object.keys(defaultCategories).forEach(key => {
         if(!localStorage.getItem('cat_' + key)) {
             localStorage.setItem('cat_' + key, JSON.stringify(defaultCategories[key]));
         }
     });
-    
     if(!localStorage.getItem('wards')) {
         localStorage.setItem('wards', JSON.stringify(defaultWards));
     }
@@ -788,30 +747,26 @@ document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const username = document.getElementById('loginUser').value;
     const password = document.getElementById('loginPass').value;
-    
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find(u => u.username === username && u.password === password);
-    
     if(user) {
         currentUser = user;
         localStorage.setItem('currentUser', JSON.stringify(user));
         showApp();
     } else {
-        alert('Invalid username or password!');
+        alert(lang === 'en' ? 'Invalid username or password!' : 'ভুল ব্যবহারকারীর নাম বা পাসওয়ার্ড!');
     }
 });
 
 function showApp() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appContainer').classList.add('active');
-    
-    // Update user info
     document.getElementById('userName').textContent = currentUser.name;
-    document.getElementById('userRole').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+    const roleNames = { admin: lang==='en'?'Admin':'অ্যাডমিন', doctor: lang==='en'?'Doctor':'ডাক্তার', receptionist: lang==='en'?'Receptionist':'রিসেপশনিস্ট', pharmacist: lang==='en'?'Pharmacist':'ফার্মাসিস্ট', lab: lang==='en'?'Lab Tech':'ল্যাব টেক' };
+    document.getElementById('userRole').textContent = roleNames[currentUser.role] || currentUser.role;
     document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=3b82f6&color=fff&bold=true`;
-    
-    // Apply role-based menu visibility
     applyRolePermissions();
+    applyLanguage();
     renderAll();
     initCharts();
 }
@@ -831,7 +786,7 @@ function applyRolePermissions() {
 }
 
 function logout() {
-    if(confirm('Are you sure you want to logout?')) {
+    if(confirm(lang === 'en' ? 'Are you sure you want to logout?' : 'আপনি কি লগআউট করতে চান?')) {
         localStorage.removeItem('currentUser');
         currentUser = null;
         location.reload();
@@ -839,10 +794,10 @@ function logout() {
 }
 
 function showProfile() {
-    alert(`Name: ${currentUser.name}\nUsername: ${currentUser.username}\nRole: ${currentUser.role}\nEmail: ${currentUser.email}`);
+    const roleNames = { admin: lang==='en'?'Admin':'অ্যাডমিন', doctor: lang==='en'?'Doctor':'ডাক্তার', receptionist: lang==='en'?'Receptionist':'রিসেপশনিস্ট', pharmacist: lang==='en'?'Pharmacist':'ফার্মাসিস্ট', lab: lang==='en'?'Lab Technician':'ল্যাব টেকনিশিয়ান' };
+    alert(`${lang==='en'?'Name':'নাম'}: ${currentUser.name}\n${lang==='en'?'Username':'ইউজারনেম'}: ${currentUser.username}\n${lang==='en'?'Role':'ভূমিকা'}: ${roleNames[currentUser.role]}\n${lang==='en'?'Email':'ইমেইল'}: ${currentUser.email}`);
 }
 
-// Theme
 function toggleTheme() {
     const html = document.documentElement;
     const current = html.getAttribute('data-theme');
@@ -852,18 +807,11 @@ function toggleTheme() {
     document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
 }
 
-// Language
-function toggleLang() {
-    alert('Language toggle - Bengali/English');
-}
-
-// Sidebar
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('active');
     document.getElementById('sidebarOverlay').classList.toggle('active');
 }
 
-// Navigation
 function navigateTo(target) {
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
@@ -880,12 +828,10 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Storage
 const get = k => JSON.parse(localStorage.getItem(k) || '[]');
 const set = (k, v) => localStorage.setItem(k, JSON.stringify(v));
 const getObj = (k, def) => JSON.parse(localStorage.getItem(k)) || def;
 
-// Populate categories
 function populateCategories() {
     const fillSelect = (id, key) => {
         const sel = document.getElementById(id);
@@ -893,7 +839,6 @@ function populateCategories() {
         const items = getObj('cat_' + key, defaultCategories[key]);
         sel.innerHTML = items.map(i => `<option value="${i}">${i}</option>`).join('');
     };
-    
     fillSelect('d-spec', 'specializations');
     fillSelect('l-test', 'labTests');
     fillSelect('m-cat', 'medicineCategories');
@@ -917,7 +862,6 @@ function populateDoctorSelects() {
     });
 }
 
-// Forms
 const forms = {
     'f-patient': { key: 'patients', fields: ['name','age','gender','phone','type','disease'], prefix: 'p' },
     'f-doctor': { key: 'doctors', fields: ['name','spec','phone','fee','schedule','status'], prefix: 'd' },
@@ -950,11 +894,10 @@ Object.keys(forms).forEach(formId => {
         set(cfg.key, list);
         form.reset();
         renderAll();
-        addActivity(`New ${cfg.key} record added by ${currentUser.name}`);
+        addActivity(`${lang==='en'?'New':'নতুন'} ${cfg.key} ${lang==='en'?'record added':'রেকর্ড যোগ করা হয়েছে'} - ${currentUser.name}`);
     });
 });
 
-// Bill calculation
 function calculateBill() {
     const amount = parseFloat(document.getElementById('b-amount').value) || 0;
     const discount = parseFloat(document.getElementById('b-discount').value) || 0;
@@ -964,9 +907,8 @@ function calculateBill() {
     document.getElementById('b-total').value = '৳ ' + total.toFixed(2);
 }
 
-// Delete with Recycle Bin
 function del(key, id) {
-    if(!confirm('Move to Recycle Bin?')) return;
+    if(!confirm(lang === 'en' ? 'Move to Recycle Bin?' : 'রিসাইকেল বিনে পাঠাবেন?')) return;
     const list = get(key);
     const item = list.find(x => x.id === id);
     if(item) {
@@ -982,17 +924,15 @@ function renderRecycleBin() {
     const recycleBin = get('recycleBin');
     const container = document.getElementById('recycleBinList');
     document.getElementById('recycleCount').textContent = recycleBin.length;
-    
     if(recycleBin.length === 0) {
-        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:40px;">Recycle Bin is empty</p>`;
+        container.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:40px;">${lang==='en'?'Recycle Bin is empty':'রিসাইকেল বিন খালি'}</p>`;
         return;
     }
-    
     container.innerHTML = recycleBin.map((item, idx) => `
         <div style="background:var(--bg); padding:12px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-            <div><strong>${item.name || item.desc || 'Item'}</strong><br><small style="color:var(--text-muted);">From: ${item.originalKey} | Deleted: ${new Date(item.deletedAt).toLocaleDateString()}</small></div>
+            <div><strong>${item.name || item.desc || 'Item'}</strong><br><small style="color:var(--text-muted);">${lang==='en'?'From':'থেকে'}: ${item.originalKey} | ${lang==='en'?'Deleted':'মুছে ফেলা'}: ${new Date(item.deletedAt).toLocaleDateString()}</small></div>
             <div style="display:flex; gap:8px;">
-                <button class="btn btn-success btn-sm" onclick="restoreItem(${idx})"><i class="fas fa-undo"></i> Restore</button>
+                <button class="btn btn-success btn-sm" onclick="restoreItem(${idx})"><i class="fas fa-undo"></i> ${lang==='en'?'Restore':'পুনরুদ্ধার'}</button>
                 <button class="btn btn-danger" onclick="permanentDelete(${idx})"><i class="fas fa-trash"></i></button>
             </div>
         </div>
@@ -1001,19 +941,20 @@ function renderRecycleBin() {
 
 function restoreItem(idx) {
     const recycleBin = get('recycleBin');
-    const item = recycleBin[idx];
-    const list = get(item.originalKey);
+    const item = {...recycleBin[idx]};
+    const origKey = item.originalKey;
     delete item.originalKey;
     delete item.deletedAt;
+    const list = get(origKey);
     list.push(item);
-    set(item.originalKey || 'patients', list);
+    set(origKey, list);
     recycleBin.splice(idx, 1);
     set('recycleBin', recycleBin);
     renderAll();
 }
 
 function permanentDelete(idx) {
-    if(!confirm('Permanently delete?')) return;
+    if(!confirm(lang === 'en' ? 'Permanently delete?' : 'স্থায়ীভাবে মুছবেন?')) return;
     const recycleBin = get('recycleBin');
     recycleBin.splice(idx, 1);
     set('recycleBin', recycleBin);
@@ -1021,12 +962,11 @@ function permanentDelete(idx) {
 }
 
 function emptyRecycleBin() {
-    if(!confirm('Empty entire Recycle Bin?')) return;
+    if(!confirm(lang === 'en' ? 'Empty entire Recycle Bin?' : 'সম্পূর্ণ রিসাইকেল বিন খালি করবেন?')) return;
     set('recycleBin', []);
     renderAll();
 }
 
-// Activity
 function addActivity(msg) {
     let acts = get('activities');
     acts.unshift({ msg, time: new Date().toLocaleString() });
@@ -1042,10 +982,9 @@ function renderActivities() {
     feed.innerHTML = acts.length ? acts.slice(0, 8).map(a => `
         <li class="activity-item"><span class="activity-dot green"></span>
         <div class="activity-content"><h4>${a.msg}</h4><span class="activity-time">${a.time}</span></div></li>
-    `).join('') : `<li style="padding:20px; text-align:center; color:var(--text-muted);">No recent activity</li>`;
+    `).join('') : `<li style="padding:20px; text-align:center; color:var(--text-muted);">${lang==='en'?'No recent activity':'কোনো সাম্প্রতিক কার্যক্রম নেই'}</li>`;
 }
 
-// WARD & BED MANAGEMENT - FIXED
 let currentWard = 'ICU';
 
 function renderWards() {
@@ -1053,7 +992,6 @@ function renderWards() {
     const tabsContainer = document.getElementById('wardTabs');
     const contentContainer = document.getElementById('wardContent');
     
-    // Render tabs
     tabsContainer.innerHTML = Object.keys(wards).map(ward => {
         const beds = wards[ward];
         const available = beds.filter(b => b.status === 'available').length;
@@ -1062,7 +1000,6 @@ function renderWards() {
         </div>`;
     }).join('');
     
-    // Render beds for current ward
     const beds = wards[currentWard] || [];
     contentContainer.innerHTML = `<div class="bed-grid">${beds.map(bed => `
         <div class="bed ${bed.status}" onclick="showBedDetails('${currentWard}', '${bed.id}')">
@@ -1072,47 +1009,38 @@ function renderWards() {
         </div>
     `).join('')}</div>`;
     
-    // Update statistics
     const allBeds = Object.values(wards).flat();
-    document.getElementById('bed-total').textContent = allBeds.length;
-    document.getElementById('bed-available').textContent = allBeds.filter(b => b.status === 'available').length;
-    document.getElementById('bed-occupied').textContent = allBeds.filter(b => b.status === 'occupied').length;
-    document.getElementById('bed-maintenance').textContent = allBeds.filter(b => b.status === 'maintenance').length;
     document.getElementById('s-beds').textContent = allBeds.filter(b => b.status === 'available').length;
 }
 
-function switchWard(ward) {
-    currentWard = ward;
-    renderWards();
-}
+function switchWard(ward) { currentWard = ward; renderWards(); }
 
 function showBedDetails(ward, bedId) {
     const wards = getObj('wards', defaultWards);
     const bed = wards[ward].find(b => b.id === bedId);
     if(!bed) return;
     
-    document.getElementById('bedModalTitle').textContent = `Bed: ${bedId} (${ward})`;
+    document.getElementById('bedModalTitle').textContent = `${lang==='en'?'Bed':'বেড'}: ${bedId} (${ward})`;
     document.getElementById('bedModalContent').innerHTML = `
         <div style="margin-bottom: 20px;">
-            <p><strong>Status:</strong> <span class="badge badge-${bed.status === 'available' ? 'success' : bed.status === 'occupied' ? 'danger' : 'warning'}">${bed.status}</span></p>
-            ${bed.patient ? `<p style="margin-top: 10px;"><strong>Patient:</strong> ${bed.patient}</p>` : ''}
+            <p><strong>${lang==='en'?'Status':'অবস্থা'}:</strong> <span class="badge badge-${bed.status === 'available' ? 'success' : bed.status === 'occupied' ? 'danger' : 'warning'}">${bed.status}</span></p>
+            ${bed.patient ? `<p style="margin-top: 10px;"><strong>${lang==='en'?'Patient':'রোগী'}:</strong> ${bed.patient}</p>` : ''}
         </div>
         <div class="form-group">
-            <label>Change Status</label>
+            <label>${lang==='en'?'Change Status':'অবস্থা পরিবর্তন'}</label>
             <select id="bedStatus" onchange="updateBedStatus('${ward}', '${bedId}', this.value)">
-                <option value="available" ${bed.status === 'available' ? 'selected' : ''}>Available</option>
-                <option value="occupied" ${bed.status === 'occupied' ? 'selected' : ''}>Occupied</option>
-                <option value="maintenance" ${bed.status === 'maintenance' ? 'selected' : ''}>Maintenance</option>
+                <option value="available" ${bed.status === 'available' ? 'selected' : ''}>${lang==='en'?'Available':'খালি'}</option>
+                <option value="occupied" ${bed.status === 'occupied' ? 'selected' : ''}>${lang==='en'?'Occupied':'দখলকৃত'}</option>
+                <option value="maintenance" ${bed.status === 'maintenance' ? 'selected' : ''}>${lang==='en'?'Maintenance':'রক্ষণাবেক্ষণ'}</option>
             </select>
         </div>
-        ${bed.status === 'occupied' || bed.status === 'available' ? `
         <div class="form-group" style="margin-top: 12px;">
-            <label>Patient Name (if occupied)</label>
+            <label>${lang==='en'?'Patient Name':'রোগীর নাম'}</label>
             <input type="text" id="bedPatient" list="patientList" value="${bed.patient || ''}" onchange="updateBedPatient('${ward}', '${bedId}', this.value)">
-        </div>` : ''}
+        </div>
         <div style="margin-top: 20px; display: flex; gap: 10px;">
-            <button class="btn btn-danger btn-sm" onclick="deleteBed('${ward}', '${bedId}')"><i class="fas fa-trash"></i> Delete Bed</button>
-            <button class="btn btn-outline btn-sm" onclick="closeModal('bedModal')">Close</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteBed('${ward}', '${bedId}')"><i class="fas fa-trash"></i> ${lang==='en'?'Delete Bed':'বেড মুছুন'}</button>
+            <button class="btn btn-outline btn-sm" onclick="closeModal('bedModal')">${lang==='en'?'Close':'বন্ধ'}</button>
         </div>
     `;
     document.getElementById('bedModal').classList.add('active');
@@ -1142,7 +1070,7 @@ function updateBedPatient(ward, bedId, patient) {
 }
 
 function deleteBed(ward, bedId) {
-    if(!confirm('Delete this bed?')) return;
+    if(!confirm(lang === 'en' ? 'Delete this bed?' : 'এই বেডটি মুছবেন?')) return;
     const wards = getObj('wards', defaultWards);
     wards[ward] = wards[ward].filter(b => b.id !== bedId);
     set('wards', wards);
@@ -1151,11 +1079,10 @@ function deleteBed(ward, bedId) {
 }
 
 function showAddBedModal() {
-    const ward = prompt('Enter ward name (ICU, General, Cabin, etc.):');
+    const ward = prompt(lang === 'en' ? 'Enter ward name (ICU, General, Cabin):' : 'ওয়ার্ডের নাম লিখুন (ICU, General, Cabin):');
     if(!ward) return;
-    const bedId = prompt('Enter bed ID (e.g., ICU-11):');
+    const bedId = prompt(lang === 'en' ? 'Enter bed ID (e.g., ICU-11):' : 'বেড আইডি লিখুন (যেমন: ICU-11):');
     if(!bedId) return;
-    
     const wards = getObj('wards', defaultWards);
     if(!wards[ward]) wards[ward] = [];
     wards[ward].push({ id: bedId, status: 'available', patient: null });
@@ -1164,82 +1091,8 @@ function showAddBedModal() {
     renderWards();
 }
 
-function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-}
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-// Patient History
-function showPatientHistory(patientName) {
-    const apps = get('apps').filter(a => a.name === patientName);
-    const presc = get('presc').filter(p => p.name === patientName);
-    const labs = get('labs').filter(l => l.name === patientName);
-    const bills = get('bills').filter(b => b.name === patientName);
-    
-    document.getElementById('patientHistoryContent').innerHTML = `
-        <h3 style="margin-bottom: 20px;">${patientName}</h3>
-        <div class="history-tabs">
-            <div class="history-tab active" onclick="showHistoryTab('appointments')">Appointments (${apps.length})</div>
-            <div class="history-tab" onclick="showHistoryTab('prescriptions')">Prescriptions (${presc.length})</div>
-            <div class="history-tab" onclick="showHistoryTab('labs')">Lab Tests (${labs.length})</div>
-            <div class="history-tab" onclick="showHistoryTab('bills')">Bills (${bills.length})</div>
-        </div>
-        <div id="history-appointments" class="history-content active">
-            ${apps.length ? apps.map(a => `<div style="padding: 10px; background: var(--bg); margin-bottom: 8px; border-radius: 8px;"><strong>${a.date} ${a.time}</strong> - Dr. ${a.doc} - <span class="badge badge-info">${a.status}</span></div>`).join('') : '<p style="color: var(--text-muted);">No appointments</p>'}
-        </div>
-        <div id="history-prescriptions" class="history-content">
-            ${presc.length ? presc.map(p => `<div style="padding: 10px; background: var(--bg); margin-bottom: 8px; border-radius: 8px;"><strong>${new Date(p.id).toLocaleDateString()}</strong> - Dr. ${p.doc} - ${p.diag}</div>`).join('') : '<p style="color: var(--text-muted);">No prescriptions</p>'}
-        </div>
-        <div id="history-labs" class="history-content">
-            ${labs.length ? labs.map(l => `<div style="padding: 10px; background: var(--bg); margin-bottom: 8px; border-radius: 8px;"><strong>${new Date(l.id).toLocaleDateString()}</strong> - ${l.test} - ৳${l.fee} - <span class="badge badge-info">${l.status}</span></div>`).join('') : '<p style="color: var(--text-muted);">No lab tests</p>'}
-        </div>
-        <div id="history-bills" class="history-content">
-            ${bills.length ? bills.map(b => `<div style="padding: 10px; background: var(--bg); margin-bottom: 8px; border-radius: 8px;"><strong>#${String(b.id).slice(-5)}</strong> - ${b.item} - ৳${b.total || b.amount} - <span class="badge badge-${b.pay === 'Paid' ? 'success' : 'warning'}">${b.pay}</span></div>`).join('') : '<p style="color: var(--text-muted);">No bills</p>'}
-        </div>
-    `;
-    document.getElementById('patientHistoryModal').classList.add('active');
-}
-
-function showHistoryTab(tab) {
-    document.querySelectorAll('.history-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.history-content').forEach(c => c.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById('history-' + tab).classList.add('active');
-}
-
-// Print Invoice
-function printInvoice(billId) {
-    const bills = get('bills');
-    const bill = bills.find(b => b.id === billId);
-    if(!bill) return;
-    
-    document.getElementById('invoiceContent').innerHTML = `
-        <div class="print-invoice">
-            <h2>MediCare Hospital</h2>
-            <div class="hospital-info">
-                <p>123 Medical Road, Dhaka, Bangladesh</p>
-                <p>Phone: +880-1700-000000 | Email: info@medicare.com</p>
-            </div>
-            <hr>
-            <h3 style="margin: 20px 0;">INVOICE</h3>
-            <table>
-                <tr><th>Invoice #</th><td>#${String(bill.id).slice(-5)}</td></tr>
-                <tr><th>Date</th><td>${new Date(bill.id).toLocaleDateString()}</td></tr>
-                <tr><th>Patient</th><td>${bill.name}</td></tr>
-                <tr><th>Item/Service</th><td>${bill.item}</td></tr>
-                <tr><th>Category</th><td>${bill.cat}</td></tr>
-                <tr><th>Amount</th><td>৳ ${bill.amount}</td></tr>
-                ${bill.discount ? `<tr><th>Discount</th><td>${bill.discount}%</td></tr>` : ''}
-                ${bill.vat ? `<tr><th>VAT</th><td>${bill.vat}%</td></tr>` : ''}
-                <tr><th><strong>Total</strong></th><td><strong>৳ ${bill.total || bill.amount}</strong></td></tr>
-                <tr><th>Payment Status</th><td>${bill.pay}</td></tr>
-            </table>
-            <p style="text-align: center; margin-top: 30px; font-size: 12px;">Thank you for choosing MediCare Hospital</p>
-        </div>
-    `;
-    document.getElementById('invoiceModal').classList.add('active');
-}
-
-// Search/Filter
 function filterTable(key) {
     const search = document.getElementById('search-' + key).value.toLowerCase();
     const tbody = document.getElementById('t-' + key);
@@ -1251,7 +1104,6 @@ function filterTable(key) {
     });
 }
 
-// Render all
 function renderAll() {
     const p = get('patients'), d = get('doctors'), a = get('apps'), pr = get('presc');
     const l = get('labs'), ot = get('ot'), bl = get('blood'), am = get('amb');
@@ -1267,24 +1119,39 @@ function renderAll() {
     const totalExp = ex.reduce((s, x) => s + parseFloat(x.amount || 0), 0);
     document.getElementById('e-total').textContent = '৳ ' + totalExp.toLocaleString();
     document.getElementById('e-month').textContent = '৳ ' + ex.filter(x => new Date(x.date).getMonth() === new Date().getMonth()).reduce((s, x) => s + parseFloat(x.amount || 0), 0).toLocaleString();
+    document.getElementById('r-rev').textContent = '৳ ' + b.reduce((s, x) => s + parseFloat(x.total || x.amount || 0), 0).toLocaleString();
+    document.getElementById('r-exp').textContent = '৳ ' + totalExp.toLocaleString();
+    document.getElementById('r-profit').textContent = '৳ ' + (b.reduce((s, x) => s + parseFloat(x.total || x.amount || 0), 0) - totalExp).toLocaleString();
 
-    const empty = 'No records';
+    const empty = lang === 'en' ? 'No records' : 'কোনো রেকর্ড নেই';
+    const actionLabel = lang === 'en' ? 'Action' : 'অ্যাকশন';
     const mkRow = (data, fields, key, cols) => data.length ? data.map(x => {
         const cells = fields.map(f => `<td>${f(x)}</td>`).join('');
         return `<tr>${cells}<td style="white-space: nowrap;"><button class="btn btn-danger" onclick="del('${key}',${x.id})"><i class="fas fa-trash"></i></button></td></tr>`;
     }).join('') : `<tr><td colspan="${cols}" style="text-align:center;color:var(--text-muted);padding:24px;">${empty}</td></tr>`;
 
     const statusBadge = (s) => {
-        const cls = s === 'Active' || s === 'Completed' || s === 'Paid' ? 'success' : s === 'Pending' || s === 'On Leave' ? 'warning' : s === 'Cancelled' || s === 'Inactive' ? 'danger' : 'info';
-        return `<span class="badge badge-${cls}">${s}</span>`;
+        const statusMap = {
+            'Active': lang==='en'?'Active':'সক্রিয়',
+            'On Leave': lang==='en'?'On Leave':'ছুটিতে',
+            'Completed': lang==='en'?'Completed':'সম্পন্ন',
+            'Pending': lang==='en'?'Pending':'অপেক্ষমান',
+            'In Progress': lang==='en'?'In Progress':'চলমান',
+            'Paid': lang==='en'?'Paid':'পরিশোধিত',
+            'Cancelled': lang==='en'?'Cancelled':'বাতিল',
+            'Scheduled': lang==='en'?'Scheduled':'নির্ধারিত',
+            'Confirmed': lang==='en'?'Confirmed':'নিশ্চিত',
+            'Partial': lang==='en'?'Partial':'আংশিক'
+        };
+        const cls = s === 'Active' || s === 'Completed' || s === 'Paid' ? 'success' : s === 'Pending' || s === 'On Leave' || s === 'In Progress' || s === 'Scheduled' ? 'warning' : s === 'Cancelled' ? 'danger' : 'info';
+        return `<span class="badge badge-${cls}">${statusMap[s] || s}</span>`;
     };
 
+    const typeMap = { 'OPD': 'OPD', 'IPD': 'IPD' };
+
     document.getElementById('t-patients').innerHTML = mkRow(p, [
-        x => String(x.id).slice(-4), 
-        x => `<a href="#" onclick="showPatientHistory('${x.name}'); return false;" style="color: var(--primary); text-decoration: none;">${x.name}</a>`, 
-        x => x.age, x => x.phone, 
-        x => `<span class="badge badge-${x.type==='IPD'?'danger':'info'}">${x.type}</span>`, 
-        x => x.disease
+        x => String(x.id).slice(-4), x => x.name, x => x.age, x => x.phone, 
+        x => `<span class="badge badge-${x.type==='IPD'?'danger':'info'}">${x.type}</span>`, x => x.disease
     ], 'patients', 7);
     
     document.getElementById('t-doctors').innerHTML = mkRow(d, [x => String(x.id).slice(-4), x => x.name, x => x.spec, x => x.phone, x => `৳ ${x.fee}`, x => statusBadge(x.status)], 'doctors', 7);
@@ -1295,38 +1162,21 @@ function renderAll() {
     document.getElementById('t-blood').innerHTML = mkRow(bl, [x => String(x.id).slice(-4), x => x.name, x => `<span class="badge badge-danger">${x.group}</span>`, x => x.type, x => x.units, x => new Date(x.id).toLocaleDateString()], 'blood', 7);
     document.getElementById('t-amb').innerHTML = mkRow(am, [x => String(x.id).slice(-4), x => x.name, x => x.no, x => x.driver, x => `${x.from} → ${x.to}`], 'amb', 6);
     document.getElementById('t-meds').innerHTML = mkRow(m, [x => String(x.id).slice(-4), x => x.name, x => x.cat, x => x.stock, x => `৳ ${x.price}`, x => x.expiry || '-'], 'meds', 7);
-    document.getElementById('t-bills').innerHTML = mkRow(b, [
-        x => `#${String(x.id).slice(-5)}`, x => x.name, x => x.item, 
-        x => `৳ ${x.total || x.amount}`, x => statusBadge(x.pay), x => new Date(x.id).toLocaleDateString(),
-    ], 'bills', 7).replace(/<button class="btn btn-danger"/g, '<button class="btn btn-outline btn-sm" onclick="printInvoice(BILL_ID)" style="margin-right: 4px;"><i class="fas fa-print"></i></button><button class="btn btn-danger"');
-    
-    // Fix print invoice button
-    document.querySelectorAll('#t-bills tr').forEach(row => {
-        const billId = row.querySelector('button.btn-danger')?.getAttribute('onclick')?.match(/\d+/)?.[0];
-        if(billId) {
-            const printBtn = row.querySelector('button.btn-outline');
-            if(printBtn) printBtn.setAttribute('onclick', `printInvoice(${billId})`);
-        }
-    });
-    
+    document.getElementById('t-bills').innerHTML = mkRow(b, [x => `#${String(x.id).slice(-5)}`, x => x.name, x => x.item, x => `৳ ${x.total || x.amount}`, x => statusBadge(x.pay), x => new Date(x.id).toLocaleDateString()], 'bills', 7);
     document.getElementById('t-expenses').innerHTML = mkRow(ex, [x => String(x.id).slice(-4), x => x.cat, x => x.desc, x => `৳ ${x.amount}`, x => x.paidby, x => x.date], 'expenses', 7);
     document.getElementById('t-staff').innerHTML = mkRow(st, [x => String(x.id).slice(-4), x => x.name, x => x.desig, x => x.dept, x => x.phone, x => `৳ ${x.salary}`], 'staff', 7);
     
-    // Users table
+    const roleNames = { admin: lang==='en'?'Admin':'অ্যাডমিন', doctor: lang==='en'?'Doctor':'ডাক্তার', receptionist: lang==='en'?'Receptionist':'রিসেপশনিস্ট', pharmacist: lang==='en'?'Pharmacist':'ফার্মাসিস্ট', lab: lang==='en'?'Lab Tech':'ল্যাব টেক' };
     document.getElementById('t-users').innerHTML = users.length ? users.map(u => `
         <tr>
-            <td>${u.id}</td>
-            <td>${u.name}</td>
-            <td>${u.username}</td>
-            <td><span class="badge badge-${u.role === 'admin' ? 'danger' : u.role === 'doctor' ? 'success' : 'info'}">${u.role}</span></td>
-            <td>${u.email}</td>
-            <td>${u.phone}</td>
+            <td>${u.id}</td><td>${u.name}</td><td>${u.username}</td>
+            <td><span class="badge badge-${u.role === 'admin' ? 'danger' : u.role === 'doctor' ? 'success' : 'info'}">${roleNames[u.role] || u.role}</span></td>
+            <td>${u.email}</td><td>${u.phone}</td>
             <td>${statusBadge(u.status || 'Active')}</td>
             <td>${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="del('users',${u.id})"><i class="fas fa-trash"></i></button>` : '<span style="color:var(--text-muted);">Protected</span>'}</td>
         </tr>
-    `).join('') : `<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">No users</td></tr>`;
+    `).join('') : `<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">${empty}</td></tr>`;
 
-    // Blood bank - all 8 groups
     ['A+','B+','O+','AB+','A-','B-','O-','AB-'].forEach((g, i) => {
         const ids = ['bb-ap','bb-bp','bb-op','bb-abp','bb-an','bb-bn','bb-on','bb-abn'];
         const count = bl.filter(x => x.group === g).reduce((s, x) => s + (x.type === 'Donation' || x.type === 'Received' ? parseInt(x.units) : -parseInt(x.units)), 0);
@@ -1342,44 +1192,43 @@ function renderAll() {
     renderRecycleBin();
 }
 
-// Charts
 function initCharts() {
     const ctx1 = document.getElementById('revenueChart').getContext('2d');
     charts.rev = new Chart(ctx1, {
         type: 'bar',
-        data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'], datasets: [{ label: 'Revenue (৳)', data: [150000,180000,160000,210000,240000,280000,320000], backgroundColor: '#3b82f6', borderRadius: 6 }] },
+        data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'], datasets: [{ label: lang==='en'?'Revenue (৳)':'আয় (৳)', data: [150000,180000,160000,210000,240000,280000,320000], backgroundColor: '#3b82f6', borderRadius: 6 }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
 
     const ctx2 = document.getElementById('deptChart').getContext('2d');
     charts.dept = new Chart(ctx2, {
         type: 'doughnut',
-        data: { labels: ['Medicine','Surgery','Cardiology','Pediatrics'], datasets: [{ data: [35,25,20,20], backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444'] }] },
+        data: { labels: [lang==='en'?'Medicine':'মেডিসিন',lang==='en'?'Surgery':'সার্জারি',lang==='en'?'Cardiology':'কার্ডিওলজি',lang==='en'?'Pediatrics':'শিশু'], datasets: [{ data: [35,25,20,20], backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444'] }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
     });
 
     const ctx3 = document.getElementById('profitChart').getContext('2d');
     charts.profit = new Chart(ctx3, {
         type: 'line',
-        data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'], datasets: [{ label: 'Revenue', data: [150,180,160,210,240,280,320], borderColor: '#10b981', fill: true, tension: 0.4 }, { label: 'Expenses', data: [80,95,85,110,120,140,160], borderColor: '#ef4444', fill: true, tension: 0.4 }] },
+        data: { labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'], datasets: [{ label: lang==='en'?'Revenue':'আয়', data: [150,180,160,210,240,280,320], borderColor: '#10b981', fill: true, tension: 0.4 }, { label: lang==='en'?'Expenses':'ব্যয়', data: [80,95,85,110,120,140,160], borderColor: '#ef4444', fill: true, tension: 0.4 }] },
         options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
     });
 
     const ctx4 = document.getElementById('expenseChart').getContext('2d');
     charts.expense = new Chart(ctx4, {
         type: 'bar',
-        data: { labels: ['Salary','Electricity','Maintenance','Supplies'], datasets: [{ label: 'Amount (৳)', data: [120000,25000,18000,15000], backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444'], borderRadius: 6 }] },
+        data: { labels: [lang==='en'?'Salary':'বেতন',lang==='en'?'Electricity':'বিদ্যুৎ',lang==='en'?'Maintenance':'রক্ষণাবেক্ষণ',lang==='en'?'Supplies':'সরবরাহ'], datasets: [{ label: lang==='en'?'Amount (৳)':'পরিমাণ (৳)', data: [120000,25000,18000,15000], backgroundColor: ['#3b82f6','#10b981','#f59e0b','#ef4444'], borderRadius: 6 }] },
         options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } } }
     });
 }
 
-// Init
 document.addEventListener('DOMContentLoaded', () => {
     initDefaultData();
-    
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    
+    applyLanguage();
     
     const savedUser = localStorage.getItem('currentUser');
     if(savedUser) {
