@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Master Hospital ERP v5.0 | সম্পূর্ণ হাসপাতাল ব্যবস্থাপনা</title>
+<title>Hospital ERP | সম্পূর্ণ হাসপাতাল ব্যবস্থাপনা</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -26,11 +26,13 @@
 body { background: var(--bg); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
 
 .login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(135deg, #0f172a, #1e3a8a); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-.login-box { background: var(--card-bg); padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 400px; max-width: 90%; }
+.login-box { background: var(--card-bg); padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 420px; max-width: 90%; }
 .login-logo { text-align: center; margin-bottom: 30px; }
-.login-logo i { font-size: 50px; color: var(--primary); margin-bottom: 10px; }
-.login-logo h2 { font-size: 24px; color: var(--text-main); }
-.login-logo p { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
+.login-logo-img { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #60a5fa); display: flex; align-items: center; justify-content: center; margin: 0 auto 15px; overflow: hidden; }
+.login-logo-img img { width: 100%; height: 100%; object-fit: cover; }
+.login-logo-img i { font-size: 40px; color: white; }
+.login-logo h2 { font-size: 22px; color: var(--text-main); }
+.login-logo p { color: var(--text-muted); font-size: 12px; margin-top: 5px; }
 .login-box .form-group { margin-bottom: 16px; }
 .login-box .btn { width: 100%; justify-content: center; padding: 12px; font-size: 14px; }
 .login-hint { background: var(--primary-light); padding: 10px; border-radius: 8px; font-size: 12px; color: var(--primary-dark); margin-top: 16px; text-align: center; }
@@ -44,8 +46,9 @@ body { background: var(--bg); color: var(--text-main); display: flex; min-height
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
 .logo { padding: 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #1e293b; }
-.logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #60a5fa); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
-.logo h2 { font-size: 16px; font-weight: 700; color: #f8fafc; }
+.logo-img { width: 40px; height: 40px; background: linear-gradient(135deg, var(--primary), #60a5fa); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; overflow: hidden; flex-shrink: 0; }
+.logo-img img { width: 100%; height: 100%; object-fit: cover; }
+.logo h2 { font-size: 15px; font-weight: 700; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .menu-category { padding: 12px 16px 4px; font-size: 11px; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 1px; }
 .nav-menu { list-style: none; padding: 0 12px 16px; flex: 1; }
 .nav-link { display: flex; align-items: center; gap: 12px; padding: 10px 14px; color: var(--sidebar-text); text-decoration: none; border-radius: 8px; transition: 0.2s; font-size: 13px; font-weight: 500; margin-bottom: 2px; cursor: pointer; }
@@ -108,6 +111,7 @@ body { background: var(--bg); color: var(--text-main); display: flex; min-height
 .alert-info { background: var(--primary-light); color: #1e40af; border: 1px solid #93c5fd; }
 
 .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px; }
+.form-group { margin-bottom: 12px; }
 .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--text-main); }
 .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--bg); transition: 0.2s; font-family: inherit; color: var(--text-main); }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); background: var(--card-bg); outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
@@ -162,6 +166,18 @@ tr:hover td { background: var(--bg); }
 .modal-header h3 { font-size: 18px; }
 .modal-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
 
+.settings-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
+.settings-tab { padding: 10px 16px; cursor: pointer; font-weight: 600; font-size: 13px; border-bottom: 2px solid transparent; color: var(--text-muted); }
+.settings-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+.settings-panel { display: none; }
+.settings-panel.active { display: block; }
+
+.logo-upload { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; padding: 20px; background: var(--bg); border-radius: 12px; }
+.logo-preview { width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), #60a5fa); display: flex; align-items: center; justify-content: center; overflow: hidden; border: 3px solid var(--primary-light); }
+.logo-preview img { width: 100%; height: 100%; object-fit: cover; }
+.logo-preview i { font-size: 40px; color: white; }
+.logo-upload-actions { flex: 1; }
+
 .menu-toggle { display: none; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-main); padding: 6px; border-radius: 6px; }
 .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
 @media (max-width: 1024px) { .grid-2, .grid-2-equal { grid-template-columns: 1fr; } }
@@ -181,23 +197,23 @@ tr:hover td { background: var(--bg); }
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
         <div class="login-logo">
-            <i class="fas fa-heartbeat"></i>
-            <h2 class="t" data-en="MediCare ERP" data-bn="মেডিকেয়ার ইআরপি">MediCare ERP</h2>
-            <p class="t" data-en="Hospital Management System" data-bn="হাসপাতাল ব্যবস্থাপনা সিস্টেম">Hospital Management System</p>
+            <div class="login-logo-img" id="loginLogoImg"><i class="fas fa-heartbeat"></i></div>
+            <h2 id="loginHospitalName">Hospital ERP</h2>
+            <p id="loginHospitalAddr" class="t" data-en="Hospital Management System" data-bn="হাসপাতাল ব্যবস্থাপনা সিস্টেম">Hospital Management System</p>
         </div>
         <form id="loginForm">
             <div class="form-group">
                 <label class="t" data-en="Username" data-bn="ব্যবহারকারীর নাম">Username</label>
-                <input type="text" id="loginUser" required class="t" data-ph-en="Enter username" data-ph-bn="ব্যবহারকারীর নাম লিখুন" placeholder="ব্যবহারকারীর নাম লিখুন">
+                <input type="text" id="loginUser" required>
             </div>
             <div class="form-group">
                 <label class="t" data-en="Password" data-bn="পাসওয়ার্ড">Password</label>
-                <input type="password" id="loginPass" required class="t" data-ph-en="Enter password" data-ph-bn="পাসওয়ার্ড লিখুন" placeholder="পাসওয়ার্ড লিখুন">
+                <input type="password" id="loginPass" required>
             </div>
             <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> <span class="t" data-en="Login" data-bn="লগইন">Login</span></button>
         </form>
         <div class="login-hint">
-            <strong class="t" data-en="Default Login:" data-bn="ডিফল্ট লগইন:">Default Login:</strong> admin / admin123
+            <strong class="t" data-en="Default:" data-bn="ডিফল্ট:">Default:</strong> admin / admin123
         </div>
         <div class="login-lang">
             <button onclick="toggleLang()"><i class="fas fa-globe"></i> <span id="loginLangText">English</span></button>
@@ -211,12 +227,12 @@ tr:hover td { background: var(--bg); }
 
     <aside class="sidebar" id="sidebar">
         <div class="logo">
-            <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
-            <h2 class="t" data-en="MediCare ERP" data-bn="মেডিকেয়ার ইআরপি">MediCare ERP</h2>
+            <div class="logo-img" id="sidebarLogo"><i class="fas fa-heartbeat"></i></div>
+            <h2 id="sidebarHospitalName">Hospital ERP</h2>
         </div>
         
         <div class="menu-category t" data-en="Main" data-bn="প্রধান">Main</div>
-        <ul class="nav-menu" id="navMenu">
+        <ul class="nav-menu">
             <li><a class="nav-link active" data-target="dashboard" data-role="all"><i class="fas fa-th-large"></i> <span class="t" data-en="Dashboard" data-bn="ড্যাশবোর্ড">Dashboard</span></a></li>
             <li><a class="nav-link" data-target="patients" data-role="all"><i class="fas fa-user-injured"></i> <span class="t" data-en="Patients" data-bn="রোগী">Patients</span></a></li>
             <li><a class="nav-link" data-target="doctors" data-role="admin,doctor,receptionist"><i class="fas fa-user-md"></i> <span class="t" data-en="Doctors" data-bn="ডাক্তার">Doctors</span></a></li>
@@ -263,7 +279,8 @@ tr:hover td { background: var(--bg); }
             <div class="topbar-right">
                 <button class="icon-btn" onclick="toggleTheme()" title="Theme"><i class="fas fa-moon" id="themeIcon"></i></button>
                 <button class="icon-btn" onclick="toggleLang()" title="Language"><i class="fas fa-globe"></i></button>
-                <div class="profile" onclick="showProfile()">
+                <button class="icon-btn" onclick="showChangePassword()" title="Change Password"><i class="fas fa-key"></i></button>
+                <div class="profile">
                     <img id="userAvatar" src="https://ui-avatars.com/api/?name=Admin&background=3b82f6&color=fff&bold=true" alt="User">
                     <div class="profile-info">
                         <p id="userName">Admin</p>
@@ -314,7 +331,7 @@ tr:hover td { background: var(--bg); }
                 <div class="card-header"><h3><i class="fas fa-user-plus"></i> <span class="t" data-en="Register Patient" data-bn="রোগী নিবন্ধন">Register Patient</span></h3></div>
                 <form id="f-patient">
                     <div class="form-row">
-                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="p-name" required class="t" data-ph-en="Patient name" data-ph-bn="রোগীর নাম" placeholder="রোগীর নাম"></div>
+                        <div class="form-group"><label class="t" data-en="Name" data-bn="নাম">Name</label><input type="text" id="p-name" required></div>
                         <div class="form-group"><label class="t" data-en="Age" data-bn="বয়স">Age</label><input type="number" id="p-age" required></div>
                         <div class="form-group"><label class="t" data-en="Gender" data-bn="লিঙ্গ">Gender</label><select id="p-gender"><option class="t" data-en="Male" data-bn="পুরুষ">Male</option><option class="t" data-en="Female" data-bn="মহিলা">Female</option><option class="t" data-en="Other" data-bn="অন্যান্য">Other</option></select></div>
                         <div class="form-group"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" id="p-phone" required></div>
@@ -658,14 +675,71 @@ tr:hover td { background: var(--bg); }
             </div>
         </section>
 
-        <!-- SETTINGS -->
+        <!-- SETTINGS - NEW TABS -->
         <section id="settings" class="content-section">
             <div class="card">
                 <div class="card-header"><h3><i class="fas fa-cog"></i> <span class="t" data-en="Settings" data-bn="সেটিংস">Settings</span></h3></div>
-                <div class="form-group"><label class="t" data-en="Hospital Name" data-bn="হাসপাতালের নাম">Hospital Name</label><input type="text" value="MediCare Hospital"></div>
-                <div class="form-group" style="margin-top:12px;"><label class="t" data-en="Address" data-bn="ঠিকানা">Address</label><textarea>123 Medical Road, Dhaka</textarea></div>
-                <div class="form-group" style="margin-top:12px;"><label class="t" data-en="Phone" data-bn="ফোন">Phone</label><input type="text" value="+880-1700-000000"></div>
-                <button class="btn btn-primary" style="margin-top:16px;"><i class="fas fa-save"></i> <span class="t" data-en="Save Settings" data-bn="সেটিংস সেভ">Save Settings</span></button>
+                <div class="settings-tabs">
+                    <div class="settings-tab active" onclick="showSettingsTab('hospital')"><i class="fas fa-hospital"></i> <span class="t" data-en="Hospital Info" data-bn="হাসপাতালের তথ্য">Hospital Info</span></div>
+                    <div class="settings-tab" onclick="showSettingsTab('categories')"><i class="fas fa-tags"></i> <span class="t" data-en="Categories" data-bn="ক্যাটাগরি">Categories</span></div>
+                    <div class="settings-tab" onclick="showSettingsTab('backup')"><i class="fas fa-database"></i> <span class="t" data-en="Backup" data-bn="ব্যাকআপ">Backup</span></div>
+                </div>
+
+                <!-- Hospital Info Panel -->
+                <div id="panel-hospital" class="settings-panel active">
+                    <h4 style="margin-bottom: 16px; color: var(--text-main);"><i class="fas fa-hospital" style="color: var(--primary);"></i> <span class="t" data-en="Hospital Information" data-bn="হাসপাতালের তথ্য">Hospital Information</span></h4>
+                    <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 20px;" class="t" data-en="Set your hospital's name, address, phone and logo. These will appear throughout the system." data-bn="আপনার হাসপাতালের নাম, ঠিকানা, ফোন এবং লোগো সেট করুন। এগুলো সিস্টেমের সর্বত্র দেখাবে।">Set your hospital's name, address, phone and logo. These will appear throughout the system.</p>
+                    
+                    <div class="logo-upload">
+                        <div class="logo-preview" id="logoPreview"><i class="fas fa-heartbeat"></i></div>
+                        <div class="logo-upload-actions">
+                            <h4 style="margin-bottom: 8px;" class="t" data-en="Hospital Logo" data-bn="হাসপাতালের লোগো">Hospital Logo</h4>
+                            <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 10px;" class="t" data-en="Recommended: Square image, 200x200px or larger" data-bn="প্রস্তাবিত: বর্গাকার ছবি, ২০০x২০০ পিক্সেল বা বড়">Recommended: Square image, 200x200px or larger</p>
+                            <input type="file" id="logoInput" accept="image/*" onchange="uploadLogo(event)" style="display:none;">
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-primary btn-sm" onclick="document.getElementById('logoInput').click()"><i class="fas fa-upload"></i> <span class="t" data-en="Upload Logo" data-bn="লোগো আপলোড">Upload Logo</span></button>
+                                <button class="btn btn-outline btn-sm" onclick="removeLogo()"><i class="fas fa-trash"></i> <span class="t" data-en="Remove" data-bn="সরান">Remove</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="t" data-en="Hospital Name" data-bn="হাসপাতালের নাম">Hospital Name</label>
+                        <input type="text" id="h-name" placeholder="Your Hospital Name">
+                    </div>
+                    <div class="form-group">
+                        <label class="t" data-en="Address" data-bn="ঠিকানা">Address</label>
+                        <textarea id="h-address" placeholder="Full address"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="t" data-en="Phone" data-bn="ফোন">Phone</label>
+                            <input type="text" id="h-phone" placeholder="+880-XXXX-XXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label class="t" data-en="Email" data-bn="ইমেইল">Email</label>
+                            <input type="email" id="h-email" placeholder="info@hospital.com">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveHospitalInfo()"><i class="fas fa-save"></i> <span class="t" data-en="Save Hospital Info" data-bn="হাসপাতালের তথ্য সেভ">Save Hospital Info</span></button>
+                </div>
+
+                <!-- Categories Panel -->
+                <div id="panel-categories" class="settings-panel">
+                    <h4 style="margin-bottom: 16px; color: var(--text-main);"><i class="fas fa-tags" style="color: var(--primary);"></i> <span class="t" data-en="Manage Categories" data-bn="ক্যাটাগরি পরিচালনা">Manage Categories</span></h4>
+                    <div id="categoriesContainer"></div>
+                </div>
+
+                <!-- Backup Panel -->
+                <div id="panel-backup" class="settings-panel">
+                    <h4 style="margin-bottom: 16px; color: var(--text-main);"><i class="fas fa-database" style="color: var(--primary);"></i> <span class="t" data-en="Backup & Restore" data-bn="ব্যাকআপ ও পুনরুদ্ধার">Backup & Restore</span></h4>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <button class="btn btn-primary" onclick="exportData()"><i class="fas fa-download"></i> <span class="t" data-en="Export Data" data-bn="ডাটা এক্সপোর্ট">Export Data</span></button>
+                        <button class="btn btn-success" onclick="document.getElementById('importFile').click()"><i class="fas fa-upload"></i> <span class="t" data-en="Import Data" data-bn="ডাটা ইমপোর্ট">Import Data</span></button>
+                        <input type="file" id="importFile" style="display:none;" accept=".json" onchange="importData(event)">
+                        <button class="btn btn-danger" onclick="clearAllData()"><i class="fas fa-trash"></i> <span class="t" data-en="Clear All Data" data-bn="সব ডাটা মুছুন">Clear All Data</span></button>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -682,12 +756,38 @@ tr:hover td { background: var(--bg); }
     </div>
 </div>
 
+<div class="modal-overlay" id="passwordModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 class="t" data-en="Change Password" data-bn="পাসওয়ার্ড পরিবর্তন">Change Password</h3>
+            <button class="modal-close" onclick="closeModal('passwordModal')">&times;</button>
+        </div>
+        <div class="form-group">
+            <label class="t" data-en="Current Password" data-bn="বর্তমান পাসওয়ার্ড">Current Password</label>
+            <input type="password" id="cp-current">
+        </div>
+        <div class="form-group">
+            <label class="t" data-en="New Password" data-bn="নতুন পাসওয়ার্ড">New Password</label>
+            <input type="password" id="cp-new">
+        </div>
+        <div class="form-group">
+            <label class="t" data-en="Confirm New Password" data-bn="নতুন পাসওয়ার্ড নিশ্চিত">Confirm New Password</label>
+            <input type="password" id="cp-confirm">
+        </div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-primary" onclick="changePassword()"><i class="fas fa-save"></i> <span class="t" data-en="Update Password" data-bn="পাসওয়ার্ড আপডেট">Update Password</span></button>
+            <button class="btn btn-outline" onclick="closeModal('passwordModal')"><span class="t" data-en="Cancel" data-bn="বাতিল">Cancel</span></button>
+        </div>
+    </div>
+</div>
+
 <datalist id="patientList"></datalist>
 
 <script>
 let currentUser = null;
 let lang = localStorage.getItem('lang') || 'bn';
 let charts = {};
+let hospitalInfo = JSON.parse(localStorage.getItem('hospitalInfo') || 'null') || { name: '', address: '', phone: '', email: '', logo: '' };
 
 const defaultCategories = {
     specializations: ['Medicine', 'Surgery', 'Cardiology', 'Pediatrics', 'Gynecology', 'Orthopedic', 'Neurology'],
@@ -700,12 +800,12 @@ const defaultCategories = {
 };
 
 const defaultWards = {
-    'ICU': Array.from({length: 10}, (_, i) => ({ id: 'ICU-' + (i+1), status: i < 3 ? 'occupied' : 'available', patient: i < 3 ? 'Patient ' + (i+1) : null })),
-    'General': Array.from({length: 20}, (_, i) => ({ id: 'G-' + (i+1), status: i % 3 === 0 ? 'occupied' : 'available', patient: i % 3 === 0 ? 'Patient ' + i : null })),
-    'Cabin': Array.from({length: 8}, (_, i) => ({ id: 'C-' + (i+1), status: i < 2 ? 'occupied' : 'available', patient: i < 2 ? 'Patient ' + (i+1) : null }))
+    'ICU': Array.from({length: 10}, (_, i) => ({ id: 'ICU-' + (i+1), status: 'available', patient: null })),
+    'General': Array.from({length: 20}, (_, i) => ({ id: 'G-' + (i+1), status: 'available', patient: null })),
+    'Cabin': Array.from({length: 8}, (_, i) => ({ id: 'C-' + (i+1), status: 'available', patient: null }))
 };
 
-// Translation function
+// Language
 function applyLanguage() {
     document.querySelectorAll('.t').forEach(el => {
         const text = el.getAttribute('data-' + lang);
@@ -713,9 +813,8 @@ function applyLanguage() {
         const ph = el.getAttribute('data-ph-' + lang);
         if(ph) el.placeholder = ph;
     });
-    document.getElementById('loginLangText').textContent = lang === 'en' ? 'বাংলা' : 'English';
+    document.getElementById('loginLangText').textContent = lang === 'en' ? 'English' : 'বাংলা';
     document.documentElement.lang = lang;
-    // Re-render dynamic content
     if(currentUser) renderAll();
 }
 
@@ -725,10 +824,106 @@ function toggleLang() {
     applyLanguage();
 }
 
+// Hospital Info
+function updateHospitalDisplay() {
+    const name = hospitalInfo.name || 'Hospital ERP';
+    const logoHtml = hospitalInfo.logo ? `<img src="${hospitalInfo.logo}" alt="Logo">` : '<i class="fas fa-heartbeat"></i>';
+    
+    document.getElementById('sidebarHospitalName').textContent = name;
+    document.getElementById('sidebarLogo').innerHTML = logoHtml;
+    document.getElementById('loginHospitalName').textContent = name;
+    document.getElementById('loginLogoImg').innerHTML = logoHtml;
+    document.title = name + ' | ERP';
+}
+
+function saveHospitalInfo() {
+    hospitalInfo.name = document.getElementById('h-name').value;
+    hospitalInfo.address = document.getElementById('h-address').value;
+    hospitalInfo.phone = document.getElementById('h-phone').value;
+    hospitalInfo.email = document.getElementById('h-email').value;
+    localStorage.setItem('hospitalInfo', JSON.stringify(hospitalInfo));
+    updateHospitalDisplay();
+    alert(lang === 'en' ? 'Hospital info saved!' : 'হাসপাতালের তথ্য সেভ হয়েছে!');
+}
+
+function loadHospitalInfoForm() {
+    document.getElementById('h-name').value = hospitalInfo.name || '';
+    document.getElementById('h-address').value = hospitalInfo.address || '';
+    document.getElementById('h-phone').value = hospitalInfo.phone || '';
+    document.getElementById('h-email').value = hospitalInfo.email || '';
+    const preview = document.getElementById('logoPreview');
+    preview.innerHTML = hospitalInfo.logo ? `<img src="${hospitalInfo.logo}" alt="Logo">` : '<i class="fas fa-heartbeat"></i>';
+}
+
+function uploadLogo(event) {
+    const file = event.target.files[0];
+    if(!file) return;
+    if(file.size > 2 * 1024 * 1024) {
+        alert(lang === 'en' ? 'Image too large! Max 2MB.' : 'ছবি অনেক বড়! সর্বোচ্চ ২MB।');
+        return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        hospitalInfo.logo = e.target.result;
+        localStorage.setItem('hospitalInfo', JSON.stringify(hospitalInfo));
+        updateHospitalDisplay();
+        loadHospitalInfoForm();
+        alert(lang === 'en' ? 'Logo uploaded!' : 'লোগো আপলোড হয়েছে!');
+    };
+    reader.readAsDataURL(file);
+}
+
+function removeLogo() {
+    if(!confirm(lang === 'en' ? 'Remove logo?' : 'লোগো সরাবেন?')) return;
+    hospitalInfo.logo = '';
+    localStorage.setItem('hospitalInfo', JSON.stringify(hospitalInfo));
+    updateHospitalDisplay();
+    loadHospitalInfoForm();
+}
+
+// Password Change
+function showChangePassword() {
+    document.getElementById('cp-current').value = '';
+    document.getElementById('cp-new').value = '';
+    document.getElementById('cp-confirm').value = '';
+    document.getElementById('passwordModal').classList.add('active');
+}
+
+function changePassword() {
+    const current = document.getElementById('cp-current').value;
+    const newPass = document.getElementById('cp-new').value;
+    const confirm = document.getElementById('cp-confirm').value;
+    
+    if(current !== currentUser.password) {
+        alert(lang === 'en' ? 'Current password is wrong!' : 'বর্তমান পাসওয়ার্ড ভুল!');
+        return;
+    }
+    if(newPass.length < 4) {
+        alert(lang === 'en' ? 'Password must be at least 4 characters!' : 'পাসওয়ার্ড কমপক্ষে ৪ অক্ষর হতে হবে!');
+        return;
+    }
+    if(newPass !== confirm) {
+        alert(lang === 'en' ? 'Passwords do not match!' : 'পাসওয়ার্ড মিলছে না!');
+        return;
+    }
+    
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userIdx = users.findIndex(u => u.id === currentUser.id);
+    if(userIdx >= 0) {
+        users[userIdx].password = newPass;
+        localStorage.setItem('users', JSON.stringify(users));
+        currentUser.password = newPass;
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        closeModal('passwordModal');
+        alert(lang === 'en' ? 'Password changed successfully!' : 'পাসওয়ার্ড সফলভাবে পরিবর্তন হয়েছে!');
+    }
+}
+
+// Init default data
 function initDefaultData() {
     if(!localStorage.getItem('users')) {
         const defaultUsers = [
-            { id: 1, name: 'System Admin', username: 'admin', password: 'admin123', role: 'admin', email: 'admin@medicare.com', phone: '01700000000', status: 'Active' }
+            { id: 1, name: 'System Admin', username: 'admin', password: 'admin123', role: 'admin', email: 'admin@hospital.com', phone: '', status: 'Active' }
         ];
         localStorage.setItem('users', JSON.stringify(defaultUsers));
     }
@@ -766,6 +961,7 @@ function showApp() {
     document.getElementById('userRole').textContent = roleNames[currentUser.role] || currentUser.role;
     document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name)}&background=3b82f6&color=fff&bold=true`;
     applyRolePermissions();
+    updateHospitalDisplay();
     applyLanguage();
     renderAll();
     initCharts();
@@ -776,26 +972,17 @@ function applyRolePermissions() {
     document.querySelectorAll('.nav-link').forEach(link => {
         const allowedRoles = link.dataset.role;
         if(allowedRoles) {
-            if(allowedRoles === 'all' || allowedRoles.includes(role)) {
-                link.parentElement.style.display = '';
-            } else {
-                link.parentElement.style.display = 'none';
-            }
+            link.parentElement.style.display = (allowedRoles === 'all' || allowedRoles.includes(role)) ? '' : 'none';
         }
     });
 }
 
 function logout() {
-    if(confirm(lang === 'en' ? 'Are you sure you want to logout?' : 'আপনি কি লগআউট করতে চান?')) {
+    if(confirm(lang === 'en' ? 'Logout?' : 'লগআউট করতে চান?')) {
         localStorage.removeItem('currentUser');
         currentUser = null;
         location.reload();
     }
-}
-
-function showProfile() {
-    const roleNames = { admin: lang==='en'?'Admin':'অ্যাডমিন', doctor: lang==='en'?'Doctor':'ডাক্তার', receptionist: lang==='en'?'Receptionist':'রিসেপশনিস্ট', pharmacist: lang==='en'?'Pharmacist':'ফার্মাসিস্ট', lab: lang==='en'?'Lab Technician':'ল্যাব টেকনিশিয়ান' };
-    alert(`${lang==='en'?'Name':'নাম'}: ${currentUser.name}\n${lang==='en'?'Username':'ইউজারনেম'}: ${currentUser.username}\n${lang==='en'?'Role':'ভূমিকা'}: ${roleNames[currentUser.role]}\n${lang==='en'?'Email':'ইমেইল'}: ${currentUser.email}`);
 }
 
 function toggleTheme() {
@@ -855,10 +1042,10 @@ function populatePatientList() {
 
 function populateDoctorSelects() {
     const docs = get('doctors');
-    const list = docs.length ? docs.map(d => d.name) : ['Dr. Sarah Khan', 'Dr. John Doe'];
+    const list = docs.map(d => d.name);
     ['a-doc', 'pr-doc', 'ot-surgeon'].forEach(id => {
         const sel = document.getElementById(id);
-        if(sel) sel.innerHTML = list.map(d => `<option value="${d}">${d}</option>`).join('');
+        if(sel) sel.innerHTML = list.length ? list.map(d => `<option value="${d}">${d}</option>`).join('') : `<option value="">${lang==='en'?'No doctors added':'কোনো ডাক্তার যোগ করা হয়নি'}</option>`;
     });
 }
 
@@ -894,7 +1081,7 @@ Object.keys(forms).forEach(formId => {
         set(cfg.key, list);
         form.reset();
         renderAll();
-        addActivity(`${lang==='en'?'New':'নতুন'} ${cfg.key} ${lang==='en'?'record added':'রেকর্ড যোগ করা হয়েছে'} - ${currentUser.name}`);
+        addActivity(`${lang==='en'?'New':'নতুন'} ${cfg.key} ${lang==='en'?'added':'যোগ করা হয়েছে'} - ${currentUser.name}`);
     });
 });
 
@@ -908,10 +1095,22 @@ function calculateBill() {
 }
 
 function del(key, id) {
-    if(!confirm(lang === 'en' ? 'Move to Recycle Bin?' : 'রিসাইকেল বিনে পাঠাবেন?')) return;
     const list = get(key);
     const item = list.find(x => x.id === id);
-    if(item) {
+    
+    // Special check for admin deletion
+    if(key === 'users' && item && item.role === 'admin') {
+        const admins = list.filter(u => u.role === 'admin');
+        if(admins.length === 1) {
+            if(!confirm(lang === 'en' ? '⚠️ This is the only admin! Create another admin first before deleting this one. Continue anyway?' : '⚠️ এটি একমাত্র অ্যাডমিন! মুছে ফেলার আগে অন্য একটি অ্যাডমিন তৈরি করুন। তবুও চালিয়ে যাবেন?')) return;
+        } else {
+            if(!confirm(lang === 'en' ? 'Delete this admin user?' : 'এই অ্যাডমিন ইউজার মুছবেন?')) return;
+        }
+    } else {
+        if(!confirm(lang === 'en' ? 'Move to Recycle Bin?' : 'রিসাইকেল বিনে পাঠাবেন?')) return;
+    }
+    
+    if(item && key !== 'users') {
         const recycleBin = get('recycleBin');
         recycleBin.push({ ...item, originalKey: key, deletedAt: Date.now() });
         set('recycleBin', recycleBin);
@@ -1104,6 +1303,65 @@ function filterTable(key) {
     });
 }
 
+// Settings tabs
+function showSettingsTab(tab) {
+    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.settings-panel').forEach(p => p.classList.remove('active'));
+    event.target.closest('.settings-tab').classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+    if(tab === 'hospital') loadHospitalInfoForm();
+    if(tab === 'categories') renderCategoriesManager();
+}
+
+function renderCategoriesManager() {
+    const container = document.getElementById('categoriesContainer');
+    const categories = [
+        { key: 'specializations', name: lang==='en'?'Doctor Specializations':'ডাক্তারের বিশেষত্ব' },
+        { key: 'labTests', name: lang==='en'?'Lab Tests':'ল্যাব টেস্ট' },
+        { key: 'medicineCategories', name: lang==='en'?'Medicine Categories':'ওষুধের ক্যাটাগরি' },
+        { key: 'billingCategories', name: lang==='en'?'Billing Categories':'বিলিং ক্যাটাগরি' },
+        { key: 'expenseCategories', name: lang==='en'?'Expense Categories':'খরচের ক্যাটাগরি' },
+        { key: 'designations', name: lang==='en'?'Staff Designations':'কর্মচারীর পদবি' },
+        { key: 'departments', name: lang==='en'?'Departments':'বিভাগসমূহ' }
+    ];
+    
+    container.innerHTML = categories.map(cat => {
+        const items = getObj('cat_' + cat.key, defaultCategories[cat.key]);
+        return `<div style="margin-bottom:20px; padding:16px; background:var(--bg); border-radius:10px; border:1px solid var(--border);">
+            <h4 style="font-size:14px; margin-bottom:10px;">${cat.name} <span class="badge badge-info">${items.length}</span></h4>
+            <div style="display:flex; gap:8px; margin-bottom:10px;">
+                <input type="text" id="new-${cat.key}" placeholder="${lang==='en'?'Add new...':'নতুন যোগ করুন...'}" style="flex:1; padding:8px 12px; border:1px solid var(--border); border-radius:6px; background:var(--card-bg); color:var(--text-main);">
+                <button class="btn btn-primary btn-sm" onclick="addCategory('${cat.key}')"><i class="fas fa-plus"></i> ${lang==='en'?'Add':'যোগ'}</button>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                ${items.map((item, idx) => `<span style="background:var(--primary-light); color:var(--primary-dark); padding:4px 10px; border-radius:12px; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px;">${item}<button onclick="removeCategory('${cat.key}', ${idx})" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:14px; padding:0; line-height:1;"><i class="fas fa-times"></i></button></span>`).join('')}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function addCategory(key) {
+    const input = document.getElementById('new-' + key);
+    const val = input.value.trim();
+    if(!val) return;
+    const items = getObj('cat_' + key, defaultCategories[key]);
+    if(items.includes(val)) { alert(lang === 'en' ? 'Already exists!' : 'ইতিমধ্যে আছে!'); return; }
+    items.push(val);
+    localStorage.setItem('cat_' + key, JSON.stringify(items));
+    input.value = '';
+    renderCategoriesManager();
+    populateCategories();
+}
+
+function removeCategory(key, idx) {
+    if(!confirm(lang === 'en' ? 'Delete?' : 'মুছবেন?')) return;
+    const items = getObj('cat_' + key, defaultCategories[key]);
+    items.splice(idx, 1);
+    localStorage.setItem('cat_' + key, JSON.stringify(items));
+    renderCategoriesManager();
+    populateCategories();
+}
+
 function renderAll() {
     const p = get('patients'), d = get('doctors'), a = get('apps'), pr = get('presc');
     const l = get('labs'), ot = get('ot'), bl = get('blood'), am = get('amb');
@@ -1124,7 +1382,6 @@ function renderAll() {
     document.getElementById('r-profit').textContent = '৳ ' + (b.reduce((s, x) => s + parseFloat(x.total || x.amount || 0), 0) - totalExp).toLocaleString();
 
     const empty = lang === 'en' ? 'No records' : 'কোনো রেকর্ড নেই';
-    const actionLabel = lang === 'en' ? 'Action' : 'অ্যাকশন';
     const mkRow = (data, fields, key, cols) => data.length ? data.map(x => {
         const cells = fields.map(f => `<td>${f(x)}</td>`).join('');
         return `<tr>${cells}<td style="white-space: nowrap;"><button class="btn btn-danger" onclick="del('${key}',${x.id})"><i class="fas fa-trash"></i></button></td></tr>`;
@@ -1147,13 +1404,7 @@ function renderAll() {
         return `<span class="badge badge-${cls}">${statusMap[s] || s}</span>`;
     };
 
-    const typeMap = { 'OPD': 'OPD', 'IPD': 'IPD' };
-
-    document.getElementById('t-patients').innerHTML = mkRow(p, [
-        x => String(x.id).slice(-4), x => x.name, x => x.age, x => x.phone, 
-        x => `<span class="badge badge-${x.type==='IPD'?'danger':'info'}">${x.type}</span>`, x => x.disease
-    ], 'patients', 7);
-    
+    document.getElementById('t-patients').innerHTML = mkRow(p, [x => String(x.id).slice(-4), x => x.name, x => x.age, x => x.phone, x => `<span class="badge badge-${x.type==='IPD'?'danger':'info'}">${x.type}</span>`, x => x.disease], 'patients', 7);
     document.getElementById('t-doctors').innerHTML = mkRow(d, [x => String(x.id).slice(-4), x => x.name, x => x.spec, x => x.phone, x => `৳ ${x.fee}`, x => statusBadge(x.status)], 'doctors', 7);
     document.getElementById('t-apps').innerHTML = mkRow(a, [x => String(x.id).slice(-4), x => x.name, x => x.doc, x => x.date, x => x.time, x => statusBadge(x.status)], 'apps', 7);
     document.getElementById('t-presc').innerHTML = mkRow(pr, [x => String(x.id).slice(-4), x => x.name, x => x.doc, x => x.diag, x => new Date(x.id).toLocaleDateString()], 'presc', 6);
@@ -1173,7 +1424,7 @@ function renderAll() {
             <td><span class="badge badge-${u.role === 'admin' ? 'danger' : u.role === 'doctor' ? 'success' : 'info'}">${roleNames[u.role] || u.role}</span></td>
             <td>${u.email}</td><td>${u.phone}</td>
             <td>${statusBadge(u.status || 'Active')}</td>
-            <td>${u.username !== 'admin' ? `<button class="btn btn-danger" onclick="del('users',${u.id})"><i class="fas fa-trash"></i></button>` : '<span style="color:var(--text-muted);">Protected</span>'}</td>
+            <td>${u.id === currentUser.id ? '<span style="color:var(--text-muted); font-size:11px;">' + (lang==='en'?'You':'আপনি') + '</span>' : `<button class="btn btn-danger" onclick="del('users',${u.id})"><i class="fas fa-trash"></i></button>`}</td>
         </tr>
     `).join('') : `<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:24px;">${empty}</td></tr>`;
 
@@ -1222,6 +1473,46 @@ function initCharts() {
     });
 }
 
+function exportData() {
+    const data = {};
+    Object.keys(forms).forEach(f => data[forms[f].key] = get(forms[f].key));
+    data.activities = get('activities');
+    data.recycleBin = get('recycleBin');
+    data.wards = getObj('wards', defaultWards);
+    data.hospitalInfo = hospitalInfo;
+    Object.keys(defaultCategories).forEach(k => data['cat_' + k] = getObj('cat_' + k, defaultCategories[k]));
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'hospital_backup_' + new Date().toISOString().split('T')[0] + '.json';
+    a.click();
+}
+
+function importData(event) {
+    const file = event.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const data = JSON.parse(e.target.result);
+            if(!confirm(lang === 'en' ? 'Replace all data?' : 'সব ডাটা প্রতিস্থাপন করবেন?')) return;
+            Object.keys(data).forEach(k => localStorage.setItem(k, JSON.stringify(data[k])));
+            if(data.hospitalInfo) hospitalInfo = data.hospitalInfo;
+            alert(lang === 'en' ? 'Imported! Reloading...' : 'ইমপোর্ট হয়েছে! রিলোড হচ্ছে...');
+            setTimeout(() => location.reload(), 1000);
+        } catch(err) { alert(lang === 'en' ? 'Invalid file!' : 'ভুল ফাইল!'); }
+    };
+    reader.readAsText(file);
+}
+
+function clearAllData() {
+    if(!confirm(lang === 'en' ? '⚠️ Delete ALL data?' : '⚠️ সব ডাটা মুছবেন?')) return;
+    if(!confirm(lang === 'en' ? 'Last warning!' : 'শেষ সতর্কতা!')) return;
+    localStorage.clear();
+    setTimeout(() => location.reload(), 1000);
+}
+
+// Init
 document.addEventListener('DOMContentLoaded', () => {
     initDefaultData();
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -1229,6 +1520,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('themeIcon').className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
     
     applyLanguage();
+    updateHospitalDisplay();
     
     const savedUser = localStorage.getItem('currentUser');
     if(savedUser) {
